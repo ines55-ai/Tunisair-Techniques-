@@ -1,0 +1,92 @@
+### Login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@tunisair.tn",
+  "password": "Admin123!"
+}
+
+### Créer un inventaire - Tous les matériels
+POST http://localhost:3000/inventaires
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "titre": "Inventaire annuel 2026",
+  "dateDebut": "2026-07-17",
+  "responsable": "Ahmed Ben Ali",
+  "remarques": "Inventaire complet de tous les matériels",
+  "perimetreType": "TOUS"
+}
+
+### Créer un inventaire - Par catégorie (PC seulement)
+POST http://localhost:3000/inventaires
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "titre": "Inventaire PC et Ordinateurs",
+  "dateDebut": "2026-07-17",
+  "responsable": "Mohamed Triki",
+  "remarques": "Inventaire des ordinateurs uniquement",
+  "perimetreType": "CATEGORIE",
+  "perimetreIds": [1]
+}
+
+### Récupérer tous les inventaires
+GET http://localhost:3000/inventaires
+Authorization: Bearer {{token}}
+
+### Récupérer un inventaire par ID
+GET http://localhost:3000/inventaires/1
+Authorization: Bearer {{token}}
+
+### Récupérer les statistiques
+GET http://localhost:3000/inventaires/statistiques
+Authorization: Bearer {{token}}
+
+### Marquer une ligne comme trouvée
+POST http://localhost:3000/inventaires/1/lignes/1/marquer-trouve
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "etat": "Bon",
+  "verifPar": "Ahmed Ben Ali",
+  "remarques": "Matériel en bon état"
+}
+
+### Mettre à jour une ligne
+PUT http://localhost:3000/inventaires/1/lignes/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "remarques": "Nécessite une vérification approfondie"
+}
+
+### Clôturer un inventaire
+POST http://localhost:3000/inventaires/1/cloturer
+Authorization: Bearer {{token}}
+
+### Valider un inventaire
+POST http://localhost:3000/inventaires/1/valider
+Authorization: Bearer {{token}}
+
+### Annuler un inventaire
+POST http://localhost:3000/inventaires/1/annuler
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "motif": "Erreur dans la configuration du périmètre"
+}
+
+### Récupérer les écarts
+GET http://localhost:3000/inventaires/1/ecarts
+Authorization: Bearer {{token}}
+
+### Supprimer un inventaire
+DELETE http://localhost:3000/inventaires/1
+Authorization: Bearer {{token}}

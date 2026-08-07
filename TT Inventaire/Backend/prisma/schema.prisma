@@ -1,0 +1,253 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// MODÈLES DE DONNÉES - IT INVENTAIRE
+// ============================================
+
+// Utilisateurs du système
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nom       String
+  prenom    String
+  role      Role     @default(USER)
+  actif     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  USER
+}
+
+// Agents (employés)
+model Agent {
+  id          Int         @id @default(autoincrement())
+  matricule   String      @unique
+  nom         String
+  prenom      String
+  email       String?
+  telephone   String?
+  poste       String?
+  departement String?
+  adresseIP   String?
+  bureauId    Int?
+  actif       Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  bureau      Bureau?     @relation(fields: [bureauId], references: [id])
+  materiels         Materiel[]
+  mouvementsSource  Mouvement[] @relation("MouvementSource")
+  mouvementsDest    Mouvement[] @relation("MouvementDest")
+
+  @@map("agents")
+}
+
+// Bureaux / Localisations
+model Bureau {
+  id          Int        @id @default(autoincrement())
+  code        String     @unique
+  nom         String
+  etage       String?
+  batiment    String?
+  capacite    Int?
+  description String?    @db.Text
+  actif       Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  agents      Agent[]
+  materiels   Materiel[]
+
+  @@map("bureaux")
+}
+
+// Catégories de matériels
+model Categorie {
+  id          Int        @id @default(autoincrement())
+  code        String     @unique
+  nom         String
+  description String?    @db.Text
+  actif       Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  materiels   Materiel[]
+
+  @@map("categories")
+}
+
+// Matériels informatiques
+model Materiel {
+  id               Int              @id @default(autoincrement())
+  numeroSerie      String           @unique
+  numeroInventaire String?          @unique
+  nom              String
+  marque           String?
+  modele           String?
+  categorieId      Int
+  statut           StatutMateriel   @default(EN_SERVICE)
+  dateAcquisition  DateTime?
+  garantieExpire   DateTime?
+  valeur           Float?
+  agentId          Int?
+  bureauId         Int?
+  description      String?          @db.Text
+  actif            Boolean          @default(true)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  categorie        Categorie        @relation(fields: [categorieId], references: [id])
+  agent            Agent?           @relation(fields: [agentId], references: [id])
+  bureau           Bureau?          @relation(fields: [bureauId], references: [id])
+  mouvements       Mouvement[]
+  antivirus        Antivirus[]
+  inventaires      InventaireLigne[]
+  stock            Stock?
+
+  @@map("materiels")
+}
+
+enum StatutMateriel {
+  EN_SERVICE
+  EN_PANNE
+  EN_MAINTENANCE
+  EN_STOCK
+  REFORME
+  PERDU
+}
+
+// Mouvements de matériels
+model Mouvement {
+  id              Int            @id @default(autoincrement())
+  materielId      Int
+  typeMouvement   TypeMouvement
+  agentSourceId   Int?
+  agentDestId     Int?
+  date            DateTime       @default(now())
+  dateRetourPrevue DateTime?
+  description     String?        @db.Text
+  remarques       String?        @db.Text
+  effectuePar     String?
+  cloture         Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  materiel        Materiel       @relation(fields: [materielId], references: [id])
+  agentSource     Agent?         @relation("MouvementSource", fields: [agentSourceId], references: [id])
+  agentDest       Agent?         @relation("MouvementDest", fields: [agentDestId], references: [id])
+
+  @@map("mouvements")
+}
+
+enum TypeMouvement {
+  AFFECTATION
+  RETOUR
+  TRANSFERT
+  MAINTENANCE
+  REFORME
+}
+
+// Inventaires (sessions d'inventaire)
+model Inventaire {
+  id               Int                @id @default(autoincrement())
+  reference        String             @unique
+  titre            String
+  dateDebut        DateTime
+  dateFin          DateTime?
+  statut           StatutInventaire   @default(EN_COURS)
+  responsable      String
+  remarques        String?            @db.Text
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  lignes           InventaireLigne[]
+
+  @@map("inventaires")
+}
+
+enum StatutInventaire {
+  EN_COURS
+  TERMINE
+  VALIDE
+  ANNULE
+}
+
+// Lignes d'inventaire (détails par matériel)
+model InventaireLigne {
+  id             Int        @id @default(autoincrement())
+  inventaireId   Int
+  materielId     Int
+  trouve         Boolean    @default(false)
+  etat           String?
+  remarques      String?    @db.Text
+  dateVerif      DateTime?
+  verifPar       String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  inventaire     Inventaire @relation(fields: [inventaireId], references: [id])
+  materiel       Materiel   @relation(fields: [materielId], references: [id])
+
+  @@map("inventaire_lignes")
+}
+
+// Antivirus installés
+model Antivirus {
+  id                Int        @id @default(autoincrement())
+  materielId        Int
+  nomAntivirus      String
+  version           String?
+  numeroLicence     String?
+  dateInstallation  DateTime?
+  dateExpiration    DateTime?
+  statut            String     @default("Actif")
+  remarques         String?    @db.Text
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  materiel          Materiel   @relation(fields: [materielId], references: [id])
+
+  @@map("antivirus")
+}
+
+// Gestion du Stock (matériels non affectés)
+model Stock {
+  id                Int        @id @default(autoincrement())
+  materielId        Int        @unique
+  dateArrivage      DateTime   @default(now())
+  quantite          Int        @default(1)
+  seuilAlerte       Int?
+  emplacement       String?
+  etat              EtatStock  @default(DISPONIBLE)
+  remarques         String?    @db.Text
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  materiel          Materiel   @relation(fields: [materielId], references: [id])
+
+  @@map("stock")
+}
+
+enum EtatStock {
+  DISPONIBLE
+  RESERVE
+  EN_COMMANDE
+  ENDOMMAGE
+}
