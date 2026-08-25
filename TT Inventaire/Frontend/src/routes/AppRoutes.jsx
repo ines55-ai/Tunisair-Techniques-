@@ -8,6 +8,8 @@ import Stock from '../pages/Stock';
 import { Inventaires, InventaireDetails } from '../pages/Inventaires';
 import Mouvements from '../pages/Mouvements';
 import Rapports from '../pages/Rapports';
+import Profile from '../pages/Profile/Profile';
+import Scanner from '../pages/Scanner';
 import NotFound from '../pages/NotFound';
 import ProtectedRoute from '../components/common/ProtectedRoute';
 
@@ -100,6 +102,22 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <Rapports />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/scanner"
+        element={
+          <ProtectedRoute>
+            <Scanner />
           </ProtectedRoute>
         }
       />

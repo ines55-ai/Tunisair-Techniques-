@@ -63,14 +63,13 @@ export class MouvementsPdfService {
     doc.moveDown(0.5);
 
     const startY = doc.y;
+    const boxHeight = 100;
 
     // Cadre
     doc
-      .rect(50, startY, 495, 100)
+      .rect(50, startY, 495, boxHeight)
       .fillAndStroke('#f5f5f5', '#cccccc')
       .fillColor('#000000');
-
-    doc.y = startY + 10;
 
     // Contenu
     doc.fontSize(11).font('Helvetica');
@@ -97,12 +96,13 @@ export class MouvementsPdfService {
       const y = startY + 12 + (index * 16);
       doc
         .font('Helvetica-Bold')
-        .text(detail.label, 60, y, { width: 150, continued: true })
+        .text(detail.label, 60, y, { width: 150, continued: false });
+      doc
         .font('Helvetica')
-        .text(detail.value);
+        .text(detail.value, 210, y, { width: 320 });
     });
 
-    doc.y = startY + 100;
+    doc.y = startY + boxHeight + 10;
     doc.moveDown(1);
   }
 
@@ -115,8 +115,10 @@ export class MouvementsPdfService {
     doc.moveDown(0.5);
 
     const startY = doc.y;
+    const boxHeight = mouvement.dateRetourPrevue ? 75 : 55;
+    
     doc
-      .rect(50, startY, 495, 70)
+      .rect(50, startY, 495, boxHeight)
       .fillAndStroke('#eef7ff', '#90caf9')
       .fillColor('#000000');
 
@@ -156,7 +158,7 @@ export class MouvementsPdfService {
         .text(new Date(mouvement.dateRetourPrevue).toLocaleDateString('fr-FR'));
     }
 
-    doc.y = startY + 80;
+    doc.y = startY + boxHeight + 10;
     doc.moveDown(1);
   }
 
@@ -169,14 +171,13 @@ export class MouvementsPdfService {
     doc.moveDown(0.5);
 
     const startY = doc.y;
+    const boxHeight = 115;
 
     // Cadre
     doc
-      .rect(50, startY, 495, 120)
+      .rect(50, startY, 495, boxHeight)
       .fillAndStroke('#e3f2fd', '#2196f3')
       .fillColor('#000000');
-
-    doc.y = startY + 10;
 
     // Contenu
     doc.fontSize(11).font('Helvetica');
@@ -191,15 +192,16 @@ export class MouvementsPdfService {
     ];
 
     materielDetails.forEach((detail, index) => {
-      const y = startY + 15 + (index * 17);
+      const y = startY + 12 + (index * 16);
       doc
         .font('Helvetica-Bold')
-        .text(detail.label, 60, y, { width: 150, continued: true })
+        .text(detail.label, 60, y, { width: 150, continued: false });
+      doc
         .font('Helvetica')
-        .text(detail.value);
+        .text(detail.value, 210, y, { width: 320 });
     });
 
-    doc.y = startY + 130;
+    doc.y = startY + boxHeight + 10;
     doc.moveDown(1);
   }
 
@@ -212,11 +214,11 @@ export class MouvementsPdfService {
     doc.moveDown(0.5);
 
     const startY = doc.y;
-    let boxHeight = 80;
+    let boxHeight = 75;
 
     // Calculer la hauteur en fonction du type de mouvement
     if (mouvement.typeMouvement === 'TRANSFERT') {
-      boxHeight = 120;
+      boxHeight = 90;
     }
 
     // Cadre
@@ -225,71 +227,72 @@ export class MouvementsPdfService {
       .fillAndStroke('#fff3e0', '#ff9800')
       .fillColor('#000000');
 
-    doc.y = startY + 10;
-
     // Contenu
     doc.fontSize(11).font('Helvetica');
 
     if (mouvement.typeMouvement === 'AFFECTATION') {
       // Seulement agent destination
       if (mouvement.agentDest) {
+        const contentY = startY + 12;
         doc
           .font('Helvetica-Bold')
-          .text('Agent destinataire:', 60, doc.y)
+          .text('Agent destinataire:', 60, contentY)
           .font('Helvetica')
-          .text(`${mouvement.agentDest.matricule} - ${mouvement.agentDest.nom} ${mouvement.agentDest.prenom}`, 60, doc.y + 15)
-          .text(`Email: ${mouvement.agentDest.email || 'N/A'}`, 60, doc.y + 30)
-          .text(`Poste: ${mouvement.agentDest.poste || 'N/A'}`, 60, doc.y + 45);
+          .text(`${mouvement.agentDest.matricule} - ${mouvement.agentDest.nom} ${mouvement.agentDest.prenom}`, 60, contentY + 16)
+          .text(`Email: ${mouvement.agentDest.email || 'N/A'}`, 60, contentY + 32)
+          .text(`Poste: ${mouvement.agentDest.poste || 'N/A'}`, 60, contentY + 48);
       }
     } else if (mouvement.typeMouvement === 'RETOUR') {
       // Seulement agent source
       if (mouvement.agentSource) {
+        const contentY = startY + 12;
         doc
           .font('Helvetica-Bold')
-          .text('Agent source:', 60, doc.y)
+          .text('Agent source:', 60, contentY)
           .font('Helvetica')
-          .text(`${mouvement.agentSource.matricule} - ${mouvement.agentSource.nom} ${mouvement.agentSource.prenom}`, 60, doc.y + 15)
-          .text(`Email: ${mouvement.agentSource.email || 'N/A'}`, 60, doc.y + 30)
-          .text(`Poste: ${mouvement.agentSource.poste || 'N/A'}`, 60, doc.y + 45);
+          .text(`${mouvement.agentSource.matricule} - ${mouvement.agentSource.nom} ${mouvement.agentSource.prenom}`, 60, contentY + 16)
+          .text(`Email: ${mouvement.agentSource.email || 'N/A'}`, 60, contentY + 32)
+          .text(`Poste: ${mouvement.agentSource.poste || 'N/A'}`, 60, contentY + 48);
       }
     } else if (mouvement.typeMouvement === 'TRANSFERT') {
       // Source et destination côte à côte
       const leftCol = 60;
       const rightCol = 305;
-      const contentY = startY + 15;
+      const contentY = startY + 12;
 
       // Agent Source
       doc
         .font('Helvetica-Bold')
+        .fontSize(10)
         .text('DE:', leftCol, contentY);
       
       if (mouvement.agentSource) {
         doc
           .font('Helvetica')
-          .fontSize(10)
-          .text(`${mouvement.agentSource.matricule}`, leftCol, contentY + 15)
-          .text(`${mouvement.agentSource.nom} ${mouvement.agentSource.prenom}`, leftCol, contentY + 28)
-          .text(`${mouvement.agentSource.poste || 'N/A'}`, leftCol, contentY + 41);
+          .fontSize(9)
+          .text(`${mouvement.agentSource.matricule}`, leftCol, contentY + 14)
+          .text(`${mouvement.agentSource.nom} ${mouvement.agentSource.prenom}`, leftCol, contentY + 26)
+          .text(`${mouvement.agentSource.poste || 'N/A'}`, leftCol, contentY + 38);
       }
 
       // Flèche
       doc
-        .fontSize(20)
-        .text('→', 270, contentY + 25);
+        .fontSize(18)
+        .text('→', 270, contentY + 22);
 
       // Agent Destination
       doc
         .font('Helvetica-Bold')
-        .fontSize(11)
+        .fontSize(10)
         .text('À:', rightCol, contentY);
       
       if (mouvement.agentDest) {
         doc
           .font('Helvetica')
-          .fontSize(10)
-          .text(`${mouvement.agentDest.matricule}`, rightCol, contentY + 15)
-          .text(`${mouvement.agentDest.nom} ${mouvement.agentDest.prenom}`, rightCol, contentY + 28)
-          .text(`${mouvement.agentDest.poste || 'N/A'}`, rightCol, contentY + 41);
+          .fontSize(9)
+          .text(`${mouvement.agentDest.matricule}`, rightCol, contentY + 14)
+          .text(`${mouvement.agentDest.nom} ${mouvement.agentDest.prenom}`, rightCol, contentY + 26)
+          .text(`${mouvement.agentDest.poste || 'N/A'}`, rightCol, contentY + 38);
       }
     }
 
@@ -307,43 +310,38 @@ export class MouvementsPdfService {
       doc.moveDown(0.5);
 
       if (mouvement.description) {
+        const startY = doc.y;
         doc
           .fontSize(11)
           .font('Helvetica-Bold')
-          .text('Description:', 50, doc.y)
+          .text('Description:', 50, startY);
+        
+        doc
           .font('Helvetica')
-          .text(mouvement.description, 50, doc.y + 15, {
+          .text(mouvement.description, 50, startY + 16, {
             width: 495,
             align: 'justify',
           });
 
-        doc.moveDown(1);
+        doc.moveDown(1.5);
       }
 
       if (mouvement.remarques) {
+        const startY = doc.y;
         doc
           .fontSize(11)
           .font('Helvetica-Bold')
-          .text('Remarques:', 50, doc.y)
+          .text('Remarques:', 50, startY);
+        
+        doc
           .font('Helvetica')
-          .text(mouvement.remarques, 50, doc.y + 15, {
+          .text(mouvement.remarques, 50, startY + 16, {
             width: 495,
             align: 'justify',
           });
 
-        doc.moveDown(1);
+        doc.moveDown(1.5);
       }
-    }
-
-    // Date de retour prévue si applicable
-    if (mouvement.dateRetourPrevue) {
-      doc.moveDown(1);
-      doc
-        .fontSize(10)
-        .font('Helvetica-Bold')
-        .text('Date de retour prévue: ', 50, doc.y, { continued: true })
-        .font('Helvetica')
-        .text(new Date(mouvement.dateRetourPrevue).toLocaleDateString('fr-FR'));
     }
 
     // Effectué par
@@ -351,14 +349,18 @@ export class MouvementsPdfService {
       doc
         .fontSize(10)
         .font('Helvetica-Bold')
-        .text('Validé par: ', 50, doc.y + 15, { continued: true })
+        .text('Validé par: ', 50, doc.y, { continued: true })
         .font('Helvetica')
         .text(mouvement.effectuePar);
+      doc.moveDown(0.5);
     }
   }
 
   private addFooter(doc: PDFKit.PDFDocument, mouvement: any) {
-    const footerY = 700;
+    // Ajouter de l'espace avant le footer
+    doc.moveDown(2);
+    
+    const footerY = doc.y;
 
     // Ligne de séparation
     doc
@@ -368,8 +370,6 @@ export class MouvementsPdfService {
       .lineWidth(1)
       .stroke();
 
-    doc.moveDown(1);
-
     // Section Signatures
     doc
       .fontSize(12)
@@ -377,9 +377,7 @@ export class MouvementsPdfService {
       .fillColor('#000000')
       .text('Signatures et Approbations', 50, footerY + 15, { align: 'center' });
 
-    doc.moveDown(0.5);
-
-    const signatureY = footerY + 45;
+    const signatureY = footerY + 40;
     const col1X = 60;
     const col2X = 230;
     const col3X = 400;

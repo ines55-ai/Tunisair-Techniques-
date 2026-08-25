@@ -21,7 +21,7 @@ const inventaireService = {
 
   // Mettre à jour un inventaire
   update: async (id, data) => {
-    const response = await api.put(`/inventaires/${id}`, data);
+    const response = await api.patch(`/inventaires/${id}`, data);
     return response.data;
   },
 
@@ -51,7 +51,7 @@ const inventaireService = {
 
   // Mettre à jour une ligne d'inventaire
   updateLigne: async (id, ligneId, data) => {
-    const response = await api.put(`/inventaires/${id}/lignes/${ligneId}`, data);
+    const response = await api.patch(`/inventaires/${id}/lignes/${ligneId}`, data);
     return response.data;
   },
 

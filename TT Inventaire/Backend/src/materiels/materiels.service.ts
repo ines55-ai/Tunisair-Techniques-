@@ -179,4 +179,41 @@ export class MaterielsService {
       reforme,
     };
   }
+
+  async findByNumeroSerie(numeroSerie: string) {
+    const materiel = await this.prisma.materiel.findUnique({
+      where: { numeroSerie },
+      include: {
+        categorie: true,
+        agent: true,
+        bureau: true,
+        mouvements: {
+          take: 5,
+          orderBy: { date: 'desc' },
+          include: {
+            agentSource: {
+              select: {
+                nom: true,
+                prenom: true,
+                matricule: true,
+              },
+            },
+            agentDest: {
+              select: {
+                nom: true,
+                prenom: true,
+                matricule: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!materiel) {
+      throw new NotFoundException('Matériel non trouvé');
+    }
+
+    return materiel;
+  }
 }

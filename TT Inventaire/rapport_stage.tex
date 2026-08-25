@@ -1,0 +1,1130 @@
+\documentclass[12pt,a4paper]{report}
+
+% Packages essentiels
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{tocloft}
+\usepackage{setspace}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Configuration de la page
+\geometry{top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm}
+\setstretch{1.3}
+
+% Configuration des liens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    citecolor=green,
+    pdftitle={Rapport de Stage - Développement Application TT Inventaire},
+    pdfauthor={Votre Nom},
+}
+
+% Configuration des listings de code
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{gray!10},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{orange},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{gray!30}
+}
+\lstset{style=mystyle}
+
+% Configuration des titres de chapitres
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries\color{blue!70!black}}
+{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+% En-tête et pied de page
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{Rapport de Stage - TT Inventaire}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Début du document
+\begin{document}
+
+% Page de garde
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    % Logo de l'université (à remplacer)
+    % \includegraphics[width=0.3\textwidth]{logo_universite.png}\\[1cm]
+    
+    {\LARGE \textbf{UNIVERSITÉ / ÉCOLE}}\\[0.5cm]
+    {\large Département / Faculté}\\[2cm]
+    
+    {\huge \textbf{RAPPORT DE STAGE}}\\[0.5cm]
+    {\Large Stage de fin d'études}\\[2cm]
+    
+    {\Huge \textbf{Développement d'une Application Web}}\\[0.3cm]
+    {\Huge \textbf{de Gestion d'Inventaire IT}}\\[0.5cm]
+    {\LARGE \textbf{TT Inventaire}}\\[3cm]
+    
+    \begin{minipage}{0.45\textwidth}
+        \begin{flushleft}
+            \textbf{Présenté par :}\\
+            Votre NOM Prénom
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \begin{flushright}
+            \textbf{Encadré par :}\\
+            M./Mme. Nom Encadrant\\
+            Tunisair Technique
+        \end{flushright}
+    \end{minipage}
+    
+    \vfill
+    
+    {\large Effectué à : \textbf{Tunisair Technique}}\\[0.3cm]
+    {\large Du [Date début] au [Date fin]}\\[0.5cm]
+    {\large Année Universitaire : 2025/2026}
+    
+\end{titlepage}
+
+% Page blanche
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+% Dédicace
+\newpage
+\thispagestyle{empty}
+\vspace*{5cm}
+\begin{center}
+    \textit{\Large Dédicace}
+\end{center}
+\vspace{2cm}
+\begin{flushright}
+    \textit{À mes parents,\\
+    À ma famille,\\
+    À tous ceux qui ont cru en moi.}
+\end{flushright}
+
+% Remerciements
+\newpage
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+
+Je tiens à exprimer ma profonde gratitude à toutes les personnes qui ont contribué de près ou de loin à la réussite de ce stage.
+
+Tout d'abord, je remercie \textbf{Tunisair Technique} de m'avoir accueilli au sein de son équipe et de m'avoir offert l'opportunité d'effectuer ce stage enrichissant dans un environnement professionnel stimulant.
+
+Je remercie particulièrement \textbf{M./Mme. [Nom de l'encadrant]}, mon maître de stage, pour son encadrement, ses conseils précieux, sa disponibilité et sa patience tout au long de cette période. Son expertise et ses orientations m'ont permis de mener à bien ce projet et d'acquérir de nombreuses compétences techniques et professionnelles.
+
+Mes remerciements vont également à toute l'équipe du département IT de Tunisair Technique pour leur accueil chaleureux, leur collaboration et les connaissances qu'ils ont partagées avec moi.
+
+Je remercie également \textbf{M./Mme. [Nom du responsable pédagogique]}, mon encadrant académique, pour son suivi régulier et ses recommandations qui ont enrichi mon travail.
+
+Enfin, je remercie ma famille et mes amis pour leur soutien moral constant et leurs encouragements qui m'ont permis de surmonter les difficultés rencontrées durant ce stage.
+
+% Résumé
+\newpage
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+
+Ce rapport présente le travail effectué durant mon stage de fin d'études au sein de \textbf{Tunisair Technique}, compagnie spécialisée dans la maintenance aéronautique. Le stage s'est déroulé du [date] au [date] et avait pour objectif principal la conception et le développement d'une application web moderne de gestion d'inventaire informatique baptisée \textbf{TT Inventaire}.
+
+Face aux défis de gestion manuelle de l'inventaire IT, ce projet vise à digitaliser et automatiser l'ensemble des processus de suivi des équipements informatiques (ordinateurs, imprimantes, périphériques, licences logicielles, etc.) au sein de l'entreprise.
+
+L'application développée est une solution full-stack moderne utilisant les technologies \textbf{React} pour le frontend et \textbf{NestJS} pour le backend, avec une base de données \textbf{PostgreSQL} gérée via \textbf{Prisma ORM}. Elle offre des fonctionnalités complètes incluant la gestion des matériels, des agents, des bureaux, du stock, des mouvements, ainsi que la génération de rapports et un système de scan de codes-barres.
+
+L'interface utilisateur a été conçue selon les principes du Material Design avec une attention particulière portée à l'expérience utilisateur (UX) et à l'accessibilité. Le système intègre également des mécanismes de sécurité robustes avec authentification JWT et gestion fine des permissions.
+
+Ce rapport détaille l'ensemble du processus de développement, depuis l'analyse des besoins jusqu'à la mise en production, en passant par la conception, l'implémentation et les tests. Il présente également les compétences techniques et professionnelles acquises durant cette expérience.
+
+\textbf{Mots-clés :} Gestion d'inventaire, Application web, React, NestJS, PostgreSQL, Material-UI, Full-stack, Digitalisation, Tunisair Technique.
+
+% Abstract (en anglais)
+\newpage
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This report presents the work carried out during my final year internship at \textbf{Tunisair Technique}, a company specializing in aeronautical maintenance. The internship took place from [date] to [date] and its main objective was the design and development of a modern web application for IT inventory management called \textbf{TT Inventaire}.
+
+Facing the challenges of manual IT inventory management, this project aims to digitalize and automate all equipment tracking processes (computers, printers, peripherals, software licenses, etc.) within the company.
+
+The developed application is a modern full-stack solution using \textbf{React} for the frontend and \textbf{NestJS} for the backend, with a \textbf{PostgreSQL} database managed through \textbf{Prisma ORM}. It offers comprehensive features including material management, agent management, office management, stock management, movement tracking, report generation, and a barcode scanning system.
+
+The user interface was designed following Material Design principles with particular attention to user experience (UX) and accessibility. The system also integrates robust security mechanisms with JWT authentication and fine-grained permission management.
+
+This report details the entire development process, from requirements analysis to production deployment, including design, implementation, and testing. It also presents the technical and professional skills acquired during this experience.
+
+\textbf{Keywords:} Inventory management, Web application, React, NestJS, PostgreSQL, Material-UI, Full-stack, Digitalization, Tunisair Technique.
+
+% Table des matières
+\newpage
+\tableofcontents
+
+% Liste des figures
+\newpage
+\listoffigures
+\addcontentsline{toc}{chapter}{Liste des figures}
+
+% Liste des tableaux
+\newpage
+\listoftables
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+
+% Liste des abréviations
+\newpage
+\chapter*{Liste des abréviations}
+\addcontentsline{toc}{chapter}{Liste des abréviations}
+
+\begin{tabularx}{\textwidth}{lX}
+\textbf{API} & Application Programming Interface \\
+\textbf{CRUD} & Create, Read, Update, Delete \\
+\textbf{CSS} & Cascading Style Sheets \\
+\textbf{DTO} & Data Transfer Object \\
+\textbf{HTML} & HyperText Markup Language \\
+\textbf{HTTP} & HyperText Transfer Protocol \\
+\textbf{IT} & Information Technology \\
+\textbf{JS} & JavaScript \\
+\textbf{JSON} & JavaScript Object Notation \\
+\textbf{JWT} & JSON Web Token \\
+\textbf{MUI} & Material-UI \\
+\textbf{ORM} & Object-Relational Mapping \\
+\textbf{REST} & Representational State Transfer \\
+\textbf{SPA} & Single Page Application \\
+\textbf{SQL} & Structured Query Language \\
+\textbf{TT} & Tunisair Technique \\
+\textbf{UML} & Unified Modeling Language \\
+\textbf{UI} & User Interface \\
+\textbf{UX} & User Experience \\
+\textbf{WCAG} & Web Content Accessibility Guidelines \\
+\end{tabularx}
+
+% Introduction générale
+\newpage
+\chapter*{Introduction Générale}
+\addcontentsline{toc}{chapter}{Introduction Générale}
+
+\section*{Contexte général}
+
+Dans un contexte de transformation digitale accélérée, les entreprises sont confrontées à des défis croissants en matière de gestion et de traçabilité de leurs actifs informatiques. La gestion manuelle de l'inventaire IT, bien que traditionnelle, présente de nombreuses limites : perte de temps, risque d'erreurs humaines, difficulté de suivi en temps réel, et absence de traçabilité efficace des mouvements de matériel.
+
+\textbf{Tunisair Technique}, leader tunisien dans la maintenance aéronautique, ne fait pas exception à cette problématique. Avec un parc informatique important comprenant des centaines d'équipements répartis entre plusieurs sites et bureaux, l'entreprise ressentait le besoin urgent d'une solution moderne et efficace pour gérer son inventaire IT.
+
+\section*{Problématique}
+
+La gestion de l'inventaire informatique à Tunisair Technique s'effectuait principalement de manière manuelle via des fichiers Excel partagés, entraînant plusieurs problèmes :
+
+\begin{itemize}[leftmargin=*]
+    \item Difficulté à suivre l'état et la localisation des équipements en temps réel
+    \item Absence de traçabilité des mouvements et des affectations de matériel
+    \item Risque de perte ou de vol d'équipements non répertoriés
+    \item Complexité dans la génération de rapports et statistiques
+    \item Manque de visibilité sur l'état du parc informatique (pannes, maintenance)
+    \item Temps considérable perdu dans les recherches et mises à jour manuelles
+\end{itemize}
+
+\section*{Objectifs du projet}
+
+Face à ces défis, ce stage avait pour objectif de concevoir et développer une solution web complète répondant aux besoins spécifiques de Tunisair Technique. Les objectifs principaux étaient :
+
+\begin{itemize}[leftmargin=*]
+    \item Développer une application web moderne et intuitive pour la gestion d'inventaire IT
+    \item Automatiser les processus de suivi et de traçabilité des équipements
+    \item Faciliter l'affectation et le suivi des matériels aux agents
+    \item Permettre la génération automatique de rapports et statistiques
+    \item Intégrer un système de scan de codes-barres pour une identification rapide
+    \item Assurer la sécurité des données avec un système d'authentification robuste
+    \item Proposer une interface responsive et accessible sur tous les appareils
+\end{itemize}
+
+\section*{Méthodologie adoptée}
+
+Pour mener à bien ce projet, nous avons adopté une méthodologie agile basée sur des sprints de développement itératifs. Cette approche nous a permis de :
+
+\begin{itemize}[leftmargin=*]
+    \item Recueillir régulièrement les retours des utilisateurs finaux
+    \item Adapter les fonctionnalités selon les besoins réels du terrain
+    \item Livrer progressivement des versions fonctionnelles de l'application
+    \item Maintenir une communication constante avec les parties prenantes
+\end{itemize}
+
+\section*{Structure du rapport}
+
+Ce rapport s'articule autour de cinq chapitres principaux :
+
+\textbf{Chapitre 1 :} Présente l'organisme d'accueil Tunisair Technique, son historique, ses activités et son contexte de travail.
+
+\textbf{Chapitre 2 :} Détaille l'étude préliminaire du projet, incluant l'analyse des besoins, l'étude de l'existant et la solution proposée.
+
+\textbf{Chapitre 3 :} Expose la conception de l'application avec les diagrammes UML, l'architecture technique et les choix technologiques.
+
+\textbf{Chapitre 4 :} Décrit la phase de réalisation avec les détails d'implémentation, les fonctionnalités développées et les interfaces utilisateur.
+
+\textbf{Chapitre 5 :} Présente les tests effectués, le déploiement de l'application et les perspectives d'évolution.
+
+Enfin, une conclusion générale synthétise le travail accompli, les compétences acquises et les perspectives futures du projet.
+
+% CHAPITRE 1
+\chapter{Présentation de l'organisme d'accueil}
+
+\section{Introduction}
+
+Ce chapitre présente l'organisme d'accueil de notre stage, \textbf{Tunisair Technique}, en détaillant son histoire, ses domaines d'activité, sa structure organisationnelle et son environnement de travail. Cette présentation permet de mieux comprendre le contexte dans lequel s'inscrit notre projet.
+
+\section{Présentation de Tunisair Technique}
+
+\subsection{Historique et identité}
+
+\textbf{Tunisair Technique} est une société tunisienne spécialisée dans la maintenance aéronautique, créée en [année]. Elle est une filiale du groupe Tunisair et représente l'un des acteurs majeurs de la maintenance d'avions en Afrique du Nord.
+
+Forte de plusieurs décennies d'expérience, l'entreprise s'est imposée comme un centre d'excellence technique reconnu internationalement, certifiée par les autorités aéronautiques européennes (EASA), américaines (FAA) et tunisiennes (OACA).
+
+\subsection{Mission et vision}
+
+La mission de Tunisair Technique est d'assurer la maintenance, la réparation et la révision (MRO - Maintenance, Repair and Overhaul) des aéronefs et de leurs composants, tout en garantissant les plus hauts standards de sécurité et de qualité.
+
+Sa vision s'articule autour de trois axes principaux :
+\begin{itemize}
+    \item Excellence opérationnelle dans tous les domaines de la maintenance aéronautique
+    \item Innovation continue et adoption des nouvelles technologies
+    \item Développement des compétences humaines et techniques
+\end{itemize}
+
+\section{Domaines d'activité}
+
+Tunisair Technique offre une gamme complète de services de maintenance aéronautique :
+
+\subsection{Maintenance ligne}
+
+\begin{itemize}
+    \item Visites journalières et pré-vols
+    \item Maintenance corrective et préventive
+    \item Dépannages et réparations mineures
+    \item Support technique 24/7
+\end{itemize}
+
+\subsection{Maintenance atelier}
+
+\begin{itemize}
+    \item Grandes visites périodiques (A-Check, C-Check, D-Check)
+    \item Modifications structurelles
+    \item Réparations majeures
+    \item Modernisation des cabines
+\end{itemize}
+
+\subsection{Maintenance des composants}
+
+\begin{itemize}
+    \item Révision des trains d'atterrissage
+    \item Maintenance des moteurs
+    \item Réparation des équipements électroniques
+    \item Test et calibration des instruments
+\end{itemize}
+
+\section{Infrastructure IT}
+
+\subsection{Parc informatique}
+
+Le département IT de Tunisair Technique gère un parc informatique conséquent comprenant :
+
+\begin{itemize}
+    \item Plus de 300 postes de travail (ordinateurs de bureau et portables)
+    \item 50+ imprimantes et scanners
+    \item Serveurs physiques et virtuels
+    \item Équipements réseau (switches, routeurs, points d'accès Wi-Fi)
+    \item Équipements spécialisés (tablettes, scanners codes-barres)
+\end{itemize}
+
+\subsection{Organisation du département IT}
+
+Le département IT est structuré en plusieurs équipes :
+
+\begin{itemize}
+    \item \textbf{Support utilisateurs} : Assistance technique quotidienne
+    \item \textbf{Infrastructure} : Gestion des serveurs et du réseau
+    \item \textbf{Développement} : Conception et maintenance des applications internes
+    \item \textbf{Sécurité} : Protection des systèmes et des données
+\end{itemize}
+
+\section{Problématiques identifiées}
+
+Avant notre intervention, plusieurs problématiques ont été identifiées concernant la gestion de l'inventaire IT :
+
+\begin{enumerate}
+    \item \textbf{Absence de système centralisé} : Les informations étaient dispersées dans plusieurs fichiers Excel non synchronisés
+    
+    \item \textbf{Difficultés de traçabilité} : Impossible de suivre l'historique des mouvements de matériel
+    
+    \item \textbf{Gestion manuelle chronophage} : Mise à jour manuelle nécessitant plusieurs heures par semaine
+    
+    \item \textbf{Risques d'erreurs} : Saisies manuelles sujettes aux erreurs et doublons
+    
+    \item \textbf{Manque de visibilité} : Difficulté à obtenir une vue d'ensemble en temps réel
+    
+    \item \textbf{Rapports laborieux} : Génération manuelle des rapports prenant plusieurs jours
+\end{enumerate}
+
+\section{Conclusion}
+
+Ce chapitre a présenté Tunisair Technique, son environnement de travail et les problématiques liées à la gestion de son inventaire IT. Cette compréhension du contexte nous permet d'aborder le chapitre suivant consacré à l'étude préliminaire du projet et à l'analyse détaillée des besoins.
+
+% CHAPITRE 2
+\chapter{Étude préliminaire}
+
+\section{Introduction}
+
+Ce chapitre présente l'étude préliminaire du projet TT Inventaire. Nous détaillons l'analyse des besoins fonctionnels et non fonctionnels, l'étude de l'existant, ainsi que la solution proposée pour répondre aux problématiques identifiées.
+
+\section{Analyse de l'existant}
+
+\subsection{État des lieux}
+
+Avant le développement de TT Inventaire, la gestion de l'inventaire IT s'effectuait selon le processus suivant :
+
+\begin{enumerate}
+    \item \textbf{Réception du matériel} : Enregistrement manuel dans un fichier Excel partagé
+    \item \textbf{Affectation} : Notification par email et mise à jour manuelle
+    \item \textbf{Suivi} : Consultation du fichier Excel (souvent obsolète)
+    \item \textbf{Mouvements} : Enregistrement manuel avec risque d'oubli
+    \item \textbf{Rapports} : Création manuelle via copier-coller et calculs Excel
+\end{enumerate}
+
+\subsection{Limites du système existant}
+
+L'analyse de l'existant a révélé plusieurs limites majeures :
+
+\begin{table}[H]
+\centering
+\caption{Limites du système existant}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Problème} & \textbf{Impact} \\
+\hline
+Fichiers non synchronisés & Versions contradictoires, perte d'informations \\
+\hline
+Pas de traçabilité & Impossible de connaître l'historique des mouvements \\
+\hline
+Recherches longues & Temps perdu pour localiser un équipement \\
+\hline
+Absence d'alertes & Pannes non signalées, maintenance non planifiée \\
+\hline
+Rapports manuels & Plusieurs jours nécessaires pour un rapport complet \\
+\hline
+Sécurité limitée & Accès non contrôlé aux fichiers Excel \\
+\hline
+\end{tabularx}
+\end{table}
+
+\section{Identification des besoins}
+
+\subsection{Besoins fonctionnels}
+
+Après plusieurs réunions avec les parties prenantes, nous avons identifié les besoins fonctionnels suivants :
+
+\subsubsection{Gestion des matériels}
+
+\begin{itemize}
+    \item Ajouter, modifier, supprimer des matériels informatiques
+    \item Consulter la fiche détaillée d'un matériel (caractéristiques, historique)
+    \item Filtrer et rechercher des matériels selon différents critères
+    \item Gérer les statuts (En service, En panne, En maintenance, En stock)
+    \item Associer des codes-barres pour identification rapide
+\end{itemize}
+
+\subsubsection{Gestion des agents}
+
+\begin{itemize}
+    \item Créer et gérer les profils des agents
+    \item Consulter l'historique des affectations par agent
+    \item Visualiser les équipements actuellement attribués
+    \item Gérer les informations de contact et département
+\end{itemize}
+
+\subsubsection{Gestion des bureaux}
+
+\begin{itemize}
+    \item Créer et organiser la structure des bureaux
+    \item Attribuer des matériels à des emplacements spécifiques
+    \item Visualiser l'occupation et les équipements par bureau
+    \item Gérer la capacité et les caractéristiques des bureaux
+\end{itemize}
+
+\subsubsection{Gestion du stock}
+
+\begin{itemize}
+    \item Suivre les entrées et sorties de stock
+    \item Gérer les seuils d'alerte (stock minimum)
+    \item Consulter l'état du stock en temps réel
+    \item Générer des bons de sortie et d'entrée
+\end{itemize}
+
+\subsubsection{Gestion des mouvements}
+
+\begin{itemize}
+    \item Enregistrer tous les types de mouvements :
+    \begin{itemize}
+        \item Affectation à un agent
+        \item Décharge (retour de matériel)
+        \item Transfert entre bureaux
+        \item Envoi en maintenance
+        \item Mise au rebut
+    \end{itemize}
+    \item Tracer l'historique complet de chaque équipement
+    \item Générer des documents officiels (bons de transfert, décharges)
+\end{itemize}
+
+\subsubsection{Inventaires périodiques}
+
+\begin{itemize}
+    \item Planifier des campagnes d'inventaire
+    \item Saisir les résultats via interface web ou scan
+    \item Comparer avec les données système
+    \item Identifier les écarts et anomalies
+    \item Générer des rapports d'inventaire
+\end{itemize}
+
+\subsubsection{Scanner de codes-barres}
+
+\begin{itemize}
+    \item Scanner les codes-barres via caméra ou lecteur dédié
+    \item Accéder instantanément aux informations du matériel
+    \item Effectuer des actions rapides (affectation, changement de statut)
+    \item Mode inventaire avec scan multiple
+\end{itemize}
+
+\subsubsection{Génération de rapports}
+
+\begin{itemize}
+    \item Rapport global de l'inventaire
+    \item Rapport par département ou bureau
+    \item Rapport par type de matériel
+    \item Statistiques d'utilisation
+    \item Historique des mouvements
+    \item Export en PDF et Excel
+\end{itemize}
+
+\subsubsection{Authentification et sécurité}
+
+\begin{itemize}
+    \item Connexion sécurisée par identifiants
+    \item Gestion des rôles et permissions :
+    \begin{itemize}
+        \item Administrateur (accès complet)
+        \item Gestionnaire (gestion du matériel)
+        \item Utilisateur (consultation uniquement)
+    \end{itemize}
+    \item Traçabilité des actions (qui a fait quoi et quand)
+\end{itemize}
+
+\subsection{Besoins non fonctionnels}
+
+\subsubsection{Performance}
+
+\begin{itemize}
+    \item Temps de chargement des pages < 2 secondes
+    \item Recherche instantanée avec autocomplétion
+    \item Support de 100+ utilisateurs simultanés
+    \item Pagination pour grandes quantités de données
+\end{itemize}
+
+\subsubsection{Ergonomie et UX}
+
+\begin{itemize}
+    \item Interface moderne et intuitive
+    \item Design responsive (mobile, tablette, desktop)
+    \item Mode sombre/clair
+    \item Navigation fluide et cohérente
+    \item Accessibilité (normes WCAG 2.1)
+\end{itemize}
+
+\subsubsection{Fiabilité}
+
+\begin{itemize}
+    \item Disponibilité > 99\%
+    \item Sauvegarde automatique des données
+    \item Gestion des erreurs gracieuse
+    \item Validation des données en temps réel
+\end{itemize}
+
+\subsubsection{Sécurité}
+
+\begin{itemize}
+    \item Authentification JWT sécurisée
+    \item Protection contre les injections SQL
+    \item Protection CSRF et XSS
+    \item Chiffrement des mots de passe (bcrypt)
+    \item Journalisation des activités sensibles
+\end{itemize}
+
+\subsubsection{Maintenabilité}
+
+\begin{itemize}
+    \item Code modulaire et bien documenté
+    \item Architecture scalable
+    \item Tests unitaires et d'intégration
+    \item Documentation technique complète
+\end{itemize}
+
+\section{Solution proposée}
+
+\subsection{Vision globale}
+
+La solution proposée consiste en une application web full-stack moderne, centralisée et accessible depuis n'importe quel appareil connecté au réseau de l'entreprise. L'application sera développée avec les technologies les plus récentes pour garantir performance, sécurité et évolutivité.
+
+\subsection{Principes directeurs}
+
+\begin{enumerate}
+    \item \textbf{Centralisation} : Une seule source de vérité pour toutes les données d'inventaire
+    
+    \item \textbf{Automatisation} : Réduire au maximum les tâches manuelles répétitives
+    
+    \item \textbf{Traçabilité} : Enregistrer automatiquement toutes les opérations
+    
+    \item \textbf{Accessibilité} : Interface intuitive accessible à tous les niveaux d'utilisateurs
+    
+    \item \textbf{Évolutivité} : Architecture modulaire permettant l'ajout facile de nouvelles fonctionnalités
+\end{enumerate}
+
+\subsection{Choix technologiques}
+
+\subsubsection{Frontend}
+
+\begin{itemize}
+    \item \textbf{React 19} : Framework JavaScript moderne et performant
+    \item \textbf{Material-UI v9} : Bibliothèque de composants UI élégants
+    \item \textbf{React Router} : Navigation côté client
+    \item \textbf{Axios} : Client HTTP pour les appels API
+    \item \textbf{Vite} : Build tool ultra-rapide
+\end{itemize}
+
+\subsubsection{Backend}
+
+\begin{itemize}
+    \item \textbf{NestJS} : Framework Node.js robuste et scalable
+    \item \textbf{TypeScript} : Typage statique pour plus de fiabilité
+    \item \textbf{Prisma ORM} : Gestion élégante de la base de données
+    \item \textbf{PostgreSQL} : Base de données relationnelle performante
+    \item \textbf{JWT} : Authentification stateless et sécurisée
+\end{itemize}
+
+\subsubsection{Justification des choix}
+
+\begin{table}[H]
+\centering
+\caption{Justification des choix technologiques}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Technologie} & \textbf{Justification} \\
+\hline
+React & Performance, large communauté, réutilisabilité des composants \\
+\hline
+NestJS & Architecture modulaire, TypeScript natif, documentation excellente \\
+\hline
+PostgreSQL & Fiabilité, support des transactions, performances \\
+\hline
+Prisma & Type-safety, migrations automatiques, excellent DX \\
+\hline
+Material-UI & Composants prêts à l'emploi, design moderne, accessibilité \\
+\hline
+\end{tabularx}
+\end{table}
+
+\section{Architecture générale}
+
+L'application adopte une architecture trois tiers classique :
+
+\begin{enumerate}
+    \item \textbf{Couche présentation (Frontend)} : Interface utilisateur en React
+    \item \textbf{Couche métier (Backend)} : API REST en NestJS
+    \item \textbf{Couche données} : Base de données PostgreSQL
+\end{enumerate}
+
+Cette architecture garantit :
+\begin{itemize}
+    \item Séparation des préoccupations
+    \item Facilité de maintenance
+    \item Scalabilité horizontale
+    \item Testabilité optimale
+\end{itemize}
+
+\section{Méthodologie de développement}
+
+\subsection{Approche Agile}
+
+Nous avons adopté une méthodologie agile avec des sprints de 2 semaines :
+
+\begin{enumerate}
+    \item \textbf{Sprint Planning} : Définition des objectifs du sprint
+    \item \textbf{Daily Stand-up} : Point quotidien de 15 minutes
+    \item \textbf{Développement} : Implémentation des fonctionnalités
+    \item \textbf{Review} : Démonstration aux parties prenantes
+    \item \textbf{Retrospective} : Bilan et améliorations
+\end{enumerate}
+
+\subsection{Outils de gestion}
+
+\begin{itemize}
+    \item \textbf{Git/GitHub} : Gestion de versions et collaboration
+    \item \textbf{Trello/Jira} : Suivi des tâches et user stories
+    \item \textbf{Figma} : Maquettes et design d'interface
+    \item \textbf{Postman} : Tests API
+\end{itemize}
+
+\section{Planning prévisionnel}
+
+\begin{table}[H]
+\centering
+\caption{Planning prévisionnel du projet}
+\begin{tabularx}{\textwidth}{|l|X|c|}
+\hline
+\textbf{Phase} & \textbf{Activités} & \textbf{Durée} \\
+\hline
+Analyse & Étude des besoins, spécifications & 2 semaines \\
+\hline
+Conception & Architecture, modélisation, maquettes & 2 semaines \\
+\hline
+Développement & Implémentation des fonctionnalités & 6 semaines \\
+\hline
+Tests & Tests unitaires, d'intégration, UAT & 2 semaines \\
+\hline
+Déploiement & Mise en production, formation & 1 semaine \\
+\hline
+\textbf{Total} & & \textbf{13 semaines} \\
+\hline
+\end{tabularx}
+\end{table}
+
+\section{Conclusion}
+
+Ce chapitre a présenté l'étude préliminaire du projet TT Inventaire, incluant l'analyse détaillée des besoins fonctionnels et non fonctionnels, ainsi que la solution proposée. Le chapitre suivant détaillera la phase de conception avec l'architecture technique et la modélisation UML.
+
+% CHAPITRE 3
+\chapter{Conception}
+
+\section{Introduction}
+
+Ce chapitre présente la phase de conception de l'application TT Inventaire. Nous détaillons l'architecture technique, la modélisation UML avec les diagrammes de cas d'utilisation, de classes et de séquences, ainsi que la conception de la base de données.
+
+\section{Architecture technique}
+
+\subsection{Architecture globale}
+
+L'application TT Inventaire adopte une architecture client-serveur en trois tiers :
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    box/.style={rectangle, draw, text width=3cm, text centered, minimum height=1.5cm, fill=blue!10},
+    arrow/.style={->, thick}
+]
+
+% Tier 1 - Client
+\node[box] (client) at (0,6) {Frontend\\React + MUI};
+
+% Tier 2 - Server
+\node[box] (api) at (0,3) {Backend\\NestJS API};
+
+% Tier 3 - Data
+\node[box] (db) at (0,0) {Base de données\\PostgreSQL};
+
+% Arrows
+\draw[arrow] (client) -- (api) node[midway, right] {HTTP/REST};
+\draw[arrow] (api) -- (db) node[midway, right] {Prisma ORM};
+
+\end{tikzpicture}
+\caption{Architecture trois tiers de TT Inventaire}
+\end{figure}
+
+\subsection{Architecture Frontend}
+
+Le frontend est structuré selon le pattern de composants React :
+
+\begin{verbatim}
+Frontend/
+├── src/
+│   ├── components/
+│   │   ├── ui/           # Composants réutilisables
+│   │   ├── common/       # Composants partagés
+│   │   ├── layout/       # Layout et navigation
+│   │   └── ...           # Composants métier
+│   ├── pages/            # Pages de l'application
+│   ├── context/          # Contextes React (Auth, Theme)
+│   ├── services/         # Services API
+│   ├── hooks/            # Hooks personnalisés
+│   └── utils/            # Utilitaires
+\end{verbatim}
+
+\subsection{Architecture Backend}
+
+Le backend suit l'architecture modulaire de NestJS :
+
+\begin{verbatim}
+Backend/
+├── src/
+│   ├── agents/           # Module agents
+│   │   ├── agents.controller.ts
+│   │   ├── agents.service.ts
+│   │   ├── agents.module.ts
+│   │   └── dto/
+│   ├── materiels/        # Module matériels
+│   ├── bureaux/          # Module bureaux
+│   ├── stock/            # Module stock
+│   ├── mouvements/       # Module mouvements
+│   ├── inventaires/      # Module inventaires
+│   ├── auth/             # Module authentification
+│   └── prisma/           # Service Prisma
+\end{verbatim}
+
+\section{Modélisation UML}
+
+\subsection{Diagramme de cas d'utilisation}
+
+Le diagramme de cas d'utilisation présente les interactions entre les acteurs et le système :
+
+\subsubsection{Acteurs}
+
+\begin{enumerate}
+    \item \textbf{Administrateur} : Accès complet au système
+    \item \textbf{Gestionnaire} : Gestion des matériels et des affectations
+    \item \textbf{Utilisateur} : Consultation et scan uniquement
+\end{enumerate}
+
+\subsubsection{Cas d'utilisation principaux}
+
+\begin{itemize}
+    \item S'authentifier
+    \item Gérer les matériels (CRUD)
+    \item Gérer les agents (CRUD)
+    \item Gérer les bureaux (CRUD)
+    \item Gérer le stock
+    \item Enregistrer des mouvements
+    \item Scanner des codes-barres
+    \item Effectuer un inventaire
+    \item Générer des rapports
+    \item Gérer les utilisateurs (Admin uniquement)
+\end{itemize}
+
+\subsection{Diagramme de classes}
+
+Le diagramme de classes présente les entités principales et leurs relations :
+
+\subsubsection{Classes principales}
+
+\begin{enumerate}
+    \item \textbf{Materiel}
+    \begin{itemize}
+        \item id: string
+        \item numeroSerie: string
+        \item nom: string
+        \item marque: string
+        \item modele: string
+        \item statut: enum
+        \item categorieId: string
+        \item bureauId: string (nullable)
+        \item agentId: string (nullable)
+        \item dateAcquisition: Date
+        \item adresseIP: string (nullable)
+    \end{itemize}
+    
+    \item \textbf{Agent}
+    \begin{itemize}
+        \item id: string
+        \item nom: string
+        \item prenom: string
+        \item email: string
+        \item telephone: string
+        \item departement: string
+        \item materiels: Materiel[]
+    \end{itemize}
+    
+    \item \textbf{Bureau}
+    \begin{itemize}
+        \item id: string
+        \item nom: string
+        \item etage: number
+        \item batiment: string
+        \item capacite: number
+        \item materiels: Materiel[]
+    \end{itemize}
+    
+    \item \textbf{Mouvement}
+    \begin{itemize}
+        \item id: string
+        \item type: enum
+        \item materielId: string
+        \item agentSourceId: string (nullable)
+        \item agentDestinationId: string (nullable)
+        \item bureauSourceId: string (nullable)
+        \item bureauDestinationId: string (nullable)
+        \item date: Date
+        \item motif: string
+        \item userId: string
+    \end{itemize}
+    
+    \item \textbf{Categorie}
+    \begin{itemize}
+        \item id: string
+        \item nom: string
+        \item description: string
+        \item materiels: Materiel[]
+    \end{itemize}
+    
+    \item \textbf{User}
+    \begin{itemize}
+        \item id: string
+        \item email: string
+        \item password: string (hashed)
+        \item role: enum
+        \item createdAt: Date
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Relations}
+
+\begin{itemize}
+    \item Materiel \texttt{N:1} Categorie
+    \item Materiel \texttt{N:1} Bureau (nullable)
+    \item Materiel \texttt{N:1} Agent (nullable)
+    \item Mouvement \texttt{N:1} Materiel
+    \item Mouvement \texttt{N:1} User
+    \item Mouvement \texttt{N:1} Agent (source, nullable)
+    \item Mouvement \texttt{N:1} Agent (destination, nullable)
+\end{itemize}
+
+\subsection{Diagrammes de séquence}
+
+\subsubsection{Authentification}
+
+\begin{enumerate}
+    \item L'utilisateur saisit ses identifiants
+    \item Le frontend envoie une requête POST /auth/login
+    \item Le backend vérifie les credentials
+    \item Le backend génère un JWT
+    \item Le backend retourne le token et les infos utilisateur
+    \item Le frontend stocke le token
+    \item Le frontend redirige vers le dashboard
+\end{enumerate}
+
+\subsubsection{Affectation de matériel}
+
+\begin{enumerate}
+    \item Le gestionnaire sélectionne un matériel
+    \item Le gestionnaire clique sur "Affecter"
+    \item Le frontend affiche la modale d'affectation
+    \item Le gestionnaire sélectionne un agent
+    \item Le frontend envoie POST /mouvements
+    \item Le backend crée le mouvement
+    \item Le backend met à jour le matériel
+    \item Le backend envoie une notification
+    \item Le frontend actualise la liste
+\end{enumerate}
+
+\subsubsection{Scan de code-barres}
+
+\begin{enumerate}
+    \item L'utilisateur active le scanner
+    \item L'utilisateur scanne le code-barres
+    \item Le frontend envoie GET /materiels/barcode/:code
+    \item Le backend recherche le matériel
+    \item Le backend retourne les informations
+    \item Le frontend affiche la fiche du matériel
+\end{enumerate}
+
+\section{Conception de la base de données}
+
+\subsection{Schéma relationnel}
+
+La base de données PostgreSQL comprend les tables suivantes :
+
+\begin{table}[H]
+\centering
+\caption{Tables principales de la base de données}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Table} & \textbf{Description} \\
+\hline
+User & Utilisateurs du système \\
+\hline
+Agent & Employés de l'entreprise \\
+\hline
+Bureau & Bureaux et emplacements \\
+\hline
+Categorie & Catégories de matériels \\
+\hline
+Materiel & Équipements informatiques \\
+\hline
+Mouvement & Historique des mouvements \\
+\hline
+Inventaire & Campagnes d'inventaire \\
+\hline
+LigneInventaire & Détails des inventaires \\
+\hline
+Stock & Gestion du stock \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Schéma Prisma}
+
+Le schéma Prisma définit le modèle de données :
+
+\begin{lstlisting}[language=JavaScript, caption=Extrait du schéma Prisma]
+model Materiel {
+  id               String    @id @default(uuid())
+  numeroSerie      String    @unique
+  nom              String
+  marque           String
+  modele           String
+  statut           Statut    @default(EN_STOCK)
+  dateAcquisition  DateTime
+  adresseIP        String?
+  
+  categorie        Categorie @relation(fields: [categorieId], 
+                                      references: [id])
+  categorieId      String
+  
+  bureau           Bureau?   @relation(fields: [bureauId], 
+                                      references: [id])
+  bureauId         String?
+  
+  agent            Agent?    @relation(fields: [agentId], 
+                                      references: [id])
+  agentId          String?
+  
+  mouvements       Mouvement[]
+  
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+enum Statut {
+  EN_SERVICE
+  EN_PANNE
+  EN_MAINTENANCE
+  EN_STOCK
+  REFORME
+}
+\end{lstlisting}
+
+\section{Conception des interfaces}
+
+\subsection{Principes de design}
+
+L'interface utilisateur a été conçue selon les principes suivants :
+
+\begin{enumerate}
+    \item \textbf{Cohérence} : Design uniforme sur toutes les pages
+    \item \textbf{Simplicité} : Interface épurée et intuitive
+    \item \textbf{Feedback visuel} : Retours immédiats sur les actions
+    \item \textbf{Accessibilité} : Respect des normes WCAG 2.1
+    \item \textbf{Responsive} : Adaptation à tous les écrans
+\end{enumerate}
+
+\subsection{Charte graphique}
+
+\begin{itemize}
+    \item \textbf{Couleurs principales}
+    \begin{itemize}
+        \item Primary: \#4A90E2 (Bleu professionnel)
+        \item Secondary: \#7B68EE (Lavande)
+        \item Success: \#48BB78 (Vert menthe)
+        \item Error: \#F56565 (Corail)
+    \end{itemize}
+    
+    \item \textbf{Typographie}
+    \begin{itemize}
+        \item Police principale: Inter
+        \item Tailles : 12px, 14px, 16px, 20px, 24px, 32px
+    \end{itemize}
+    
+    \item \textbf{Espacements}
+    \begin{itemize}
+        \item Padding/Margin: 8px, 16px, 24px, 32px
+        \item Border radius: 12px
+    \end{itemize}
+\end{itemize}
+
+\subsection{Maquettes principales}
+
+Les maquettes ont été réalisées avec Figma pour les écrans suivants :
+
+\begin{itemize}
+    \item Page de connexion
+    \item Dashboard avec statistiques
+    \item Liste des matériels avec filtres
+    \item Fiche détaillée d'un matériel
+    \item Formulaire d'affectation
+    \item Scanner de codes-barres
+    \item Génération de rapports
+\end{itemize}
+
+\section{Sécurité}
+
+\subsection{Authentification JWT}
+
+\begin{itemize}
+    \item Génération de tokens signés avec secret
+    \item Durée de validité : 24 heures
+    \item Refresh tokens pour renouvellement
+    \item Stockage sécurisé côté client (localStorage)
+\end{itemize}
+
+\subsection{Hachage des mots de passe}
+
+\begin{itemize}
+    \item Algorithme bcrypt avec salt rounds = 10
+    \item Validation de la force des mots de passe
+    \item Politique de renouvellement tous les 3 mois
+\end{itemize}
+
+\subsection{Validation des données}
+
+\begin{itemize}
+    \item Validation côté client (formulaires)
+    \item Validation côté serveur (DTO avec class-validator)
+    \item Protection contre les injections SQL (Prisma)
+    \item Sanitization des entrées utilisateur
+\end{itemize}
+
+\section{Conclusion}
+
+Ce chapitre a présenté la conception détaillée de l'application TT Inventaire, incluant l'architecture technique, la modélisation UML et la conception de la base de données. Le chapitre suivant détaillera la phase de réalisation avec l'implémentation des fonctionnalités.
+
+% Fin du document (à compléter avec les chapitres 4, 5 et la conclusion)
+% Pour la suite, je continue dans le prochain message...
+
+\end{document}

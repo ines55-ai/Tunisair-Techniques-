@@ -106,7 +106,7 @@ const Rapports = () => {
         <Typography variant="h6" gutterBottom>
           Générer un rapport mensuel
         </Typography>
-        <Grid container spacing={2} alignItems="center">
+        <Grid container spacing={2} sx={{ alignItems: 'center' }}>
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth>
               <InputLabel>Année</InputLabel>

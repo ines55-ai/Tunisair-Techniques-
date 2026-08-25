@@ -35,9 +35,12 @@ import {
   Visibility as ViewIcon,
   AssignmentInd as AffectIcon,
   SwapHoriz as TransferIcon,
+  QrCode as QrCodeIcon,
+  Print as PrintIcon,
 } from '@mui/icons-material';
 import { materielService } from '../../services/materielService';
 import { mouvementService } from '../../services/mouvementService';
+import { barcodeService } from '../../services/barcodeService';
 import MaterielForm from '../../components/materiels/MaterielForm';
 import AffectationDialog from '../../components/materiels/AffectationDialog';
 import TransfertDialog from '../../components/materiels/TransfertDialog';
@@ -189,6 +192,15 @@ function Materiels() {
     setTransfertDialogOpen(true);
   };
 
+  const handleDownloadLabel = async (materiel) => {
+    try {
+      await barcodeService.downloadLabel(materiel.id);
+      showSnackbar('Étiquette téléchargée avec succès', 'success');
+    } catch (error) {
+      showSnackbar('Erreur lors du téléchargement de l\'étiquette', 'error');
+    }
+  };
+
   const handleAffectationSubmit = async (data) => {
     try {
       setSubmitting(true);
@@ -336,6 +348,11 @@ function Materiels() {
                       <Tooltip title="Voir détails">
                         <IconButton size="small" color="info" onClick={() => handleViewClick(materiel)}>
                           <ViewIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Télécharger étiquette">
+                        <IconButton size="small" color="secondary" onClick={() => handleDownloadLabel(materiel)}>
+                          <QrCodeIcon />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Modifier">
