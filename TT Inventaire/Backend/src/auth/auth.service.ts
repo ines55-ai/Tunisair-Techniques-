@@ -28,14 +28,14 @@ export class AuthService {
     // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(registerDto.password, 10);
 
-    // Créer l'utilisateur
+    // Créer l'utilisateur — le rôle est toujours USER via l'inscription publique
     const user = await this.prisma.user.create({
       data: {
         email: registerDto.email,
         password: hashedPassword,
         nom: registerDto.nom,
         prenom: registerDto.prenom,
-        role: registerDto.role || 'USER',
+        role: 'USER',
       },
     });
 

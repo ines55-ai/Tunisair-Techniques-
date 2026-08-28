@@ -37,6 +37,7 @@ import {
   DarkMode as DarkModeIcon,
   LightMode as LightModeIcon,
   Notifications as NotificationsIcon,
+  ManageAccounts as ManageAccountsIcon,
 } from '@mui/icons-material';
 import { useAuth, useThemeMode } from '../../context';
 import BrandLogo from '../common/BrandLogo';
@@ -44,7 +45,7 @@ import { APP_NAME } from '../../utils/constants';
 
 const drawerWidth = 260;
 
-const menuItems = [
+const allMenuItems = [
   { text: 'Tableau de Bord', icon: <DashboardIcon />, path: '/dashboard' },
   { text: 'Matériels', icon: <DevicesIcon />, path: '/materiels' },
   { text: 'Scanner', icon: <ScannerIcon />, path: '/scanner' },
@@ -54,6 +55,7 @@ const menuItems = [
   { text: 'Inventaires', icon: <InventoryIcon />, path: '/inventaires' },
   { text: 'Mouvements', icon: <SwapHorizIcon />, path: '/mouvements' },
   { text: 'Rapports', icon: <AssessmentIcon />, path: '/rapports' },
+  { text: 'Utilisateurs', icon: <ManageAccountsIcon />, path: '/utilisateurs', adminOnly: true },
 ];
 
 function Layout({ children }) {
@@ -63,6 +65,11 @@ function Layout({ children }) {
   const location = useLocation();
   const { user, logout } = useAuth();
   const { mode, toggleColorMode } = useThemeMode();
+
+  // Filtrer les items de menu selon le rôle
+  const menuItems = allMenuItems.filter(
+    (item) => !item.adminOnly || user?.role === 'ADMIN'
+  );
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

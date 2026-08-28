@@ -10,6 +10,7 @@ import Mouvements from '../pages/Mouvements';
 import Rapports from '../pages/Rapports';
 import Profile from '../pages/Profile/Profile';
 import Scanner from '../pages/Scanner';
+import Users from '../pages/Users';
 import NotFound from '../pages/NotFound';
 import ProtectedRoute from '../components/common/ProtectedRoute';
 
@@ -118,6 +119,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <Scanner />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/utilisateurs"
+        element={
+          <ProtectedRoute adminOnly>
+            <Users />
           </ProtectedRoute>
         }
       />

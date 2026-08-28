@@ -29,6 +29,7 @@ async function main() {
       password: hashedPassword,
       nom: 'Administrateur',
       prenom: 'Système',
+      role: 'ADMIN',
     },
   });
 
@@ -38,6 +39,7 @@ async function main() {
       password: hashedPassword,
       nom: 'Ben Ali',
       prenom: 'Mohamed',
+      role: 'USER',
     },
   });
 
