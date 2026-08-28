@@ -8,10 +8,12 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../common/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { generateMatricule } from '../common/matricule.helper';
 
 // Champs retournés (jamais le mot de passe)
 const USER_SELECT = {
   id: true,
+  matricule: true,
   email: true,
   nom: true,
   prenom: true,
@@ -59,8 +61,16 @@ export class UsersService {
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
 
+    // Générer le matricule automatiquement
+    const matricule = await generateMatricule(
+      this.prisma as any,
+      createUserDto.prenom,
+      createUserDto.nom,
+    );
+
     const user = await this.prisma.user.create({
       data: {
+        matricule,
         email: createUserDto.email,
         password: hashedPassword,
         nom: createUserDto.nom,
@@ -78,10 +88,8 @@ export class UsersService {
 
   // Mettre à jour un utilisateur
   async update(id: number, updateUserDto: UpdateUserDto, currentUserId: number) {
-    // Vérifier que l'utilisateur existe
     await this.findOne(id);
 
-    // Si l'email change, vérifier qu'il n'est pas déjà pris
     if (updateUserDto.email) {
       const emailTaken = await this.prisma.user.findFirst({
         where: { email: updateUserDto.email, NOT: { id } },
@@ -93,7 +101,6 @@ export class UsersService {
 
     const data: any = { ...updateUserDto };
 
-    // Hasher le nouveau mot de passe si fourni
     if (updateUserDto.password) {
       data.password = await bcrypt.hash(updateUserDto.password, 10);
     }
@@ -114,7 +121,6 @@ export class UsersService {
   async toggleActif(id: number, currentUserId: number) {
     const user = await this.findOne(id);
 
-    // Empêcher l'admin de se désactiver lui-même
     if (id === currentUserId) {
       throw new BadRequestException('Vous ne pouvez pas désactiver votre propre compte');
     }

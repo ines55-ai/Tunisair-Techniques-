@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../common/prisma.service';
 import { LoginDto, RegisterDto } from './dto';
+import { generateMatricule } from '../common/matricule.helper';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,6 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    // Vérifier si l'utilisateur existe déjà
     const existingUser = await this.prisma.user.findUnique({
       where: { email: registerDto.email },
     });
@@ -25,12 +25,19 @@ export class AuthService {
       throw new ConflictException('Cet email est déjà utilisé');
     }
 
-    // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(registerDto.password, 10);
+
+    // Générer le matricule automatiquement
+    const matricule = await generateMatricule(
+      this.prisma as any,
+      registerDto.prenom,
+      registerDto.nom,
+    );
 
     // Créer l'utilisateur — le rôle est toujours USER via l'inscription publique
     const user = await this.prisma.user.create({
       data: {
+        matricule,
         email: registerDto.email,
         password: hashedPassword,
         nom: registerDto.nom,
@@ -39,13 +46,13 @@ export class AuthService {
       },
     });
 
-    // Générer le token
     const token = this.generateToken(user);
 
     return {
       message: 'Utilisateur créé avec succès',
       user: {
         id: user.id,
+        matricule: (user as any).matricule,
         email: user.email,
         nom: user.nom,
         prenom: user.prenom,
@@ -56,37 +63,45 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto) {
-    // Trouver l'utilisateur
-    const user = await this.prisma.user.findUnique({
-      where: { email: loginDto.email },
-    });
+    // Chercher par email OU par matricule
+    const identifier = loginDto.identifier;
+    const isEmail = identifier.includes('@');
+
+    let user: any = null;
+
+    if (isEmail) {
+      user = await this.prisma.user.findUnique({
+        where: { email: identifier },
+      });
+    } else {
+      // Recherche par matricule (insensible à la casse)
+      const results = await this.prisma.$queryRaw<any[]>`
+        SELECT * FROM users WHERE UPPER(matricule) = UPPER(${identifier}) LIMIT 1
+      `;
+      user = results?.[0] ?? null;
+    }
 
     if (!user) {
-      throw new UnauthorizedException('Email ou mot de passe incorrect');
+      throw new UnauthorizedException('Identifiant ou mot de passe incorrect');
     }
 
-    // Vérifier si l'utilisateur est actif
     if (!user.actif) {
-      throw new UnauthorizedException('Compte désactivé');
+      throw new UnauthorizedException('Compte désactivé. Contactez un administrateur.');
     }
 
-    // Vérifier le mot de passe
-    const isPasswordValid = await bcrypt.compare(
-      loginDto.password,
-      user.password,
-    );
+    const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Email ou mot de passe incorrect');
+      throw new UnauthorizedException('Identifiant ou mot de passe incorrect');
     }
 
-    // Générer le token
     const token = this.generateToken(user);
 
     return {
       message: 'Connexion réussie',
       user: {
         id: user.id,
+        matricule: user.matricule,
         email: user.email,
         nom: user.nom,
         prenom: user.prenom,

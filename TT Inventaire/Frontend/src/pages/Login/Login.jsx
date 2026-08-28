@@ -24,7 +24,7 @@ function Login() {
   const { login } = useAuth();
   
   const [formData, setFormData] = useState({
-    email: '',
+    identifier: '',
     password: '',
   });
   
@@ -154,12 +154,13 @@ function Login() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Adresse Email"
-                name="email"
-                autoComplete="email"
+                id="identifier"
+                label="Email ou Matricule"
+                name="identifier"
+                autoComplete="username"
                 autoFocus
-                value={formData.email}
+                placeholder="Ex : admin@tunisair.tn ou SA001"
+                value={formData.identifier}
                 onChange={handleChange}
                 disabled={loading}
                 sx={{

@@ -233,6 +233,9 @@ function Users() {
                             <Typography variant="body2" fontWeight={600}>
                               {u.prenom} {u.nom}
                             </Typography>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontFamily: 'monospace' }}>
+                              {u.matricule}
+                            </Typography>
                           </Box>
                         </Box>
                       </TableCell>

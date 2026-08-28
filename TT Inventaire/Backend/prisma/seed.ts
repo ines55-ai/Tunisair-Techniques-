@@ -25,6 +25,7 @@ async function main() {
   
   const admin = await prisma.user.create({
     data: {
+      matricule: 'SA001',
       email: 'admin@tunisair.tn',
       password: hashedPassword,
       nom: 'Administrateur',
@@ -35,6 +36,7 @@ async function main() {
 
   const user1 = await prisma.user.create({
     data: {
+      matricule: 'MB002',
       email: 'mohamed.ben.ali@tunisair.tn',
       password: hashedPassword,
       nom: 'Ben Ali',
