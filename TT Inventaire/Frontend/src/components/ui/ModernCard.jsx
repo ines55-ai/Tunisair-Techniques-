@@ -116,7 +116,7 @@ function ModernCard({
         <CardHeader
           title={title}
           subheader={subheader}
-          titleTypographyProps={{ fontWeight: 700 }}
+          slotProps={{ title: { fontWeight: 700 } }}
           sx={{ position: 'relative', zIndex: 1 }}
         />
       )}

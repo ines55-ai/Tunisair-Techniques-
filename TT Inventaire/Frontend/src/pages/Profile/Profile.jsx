@@ -192,7 +192,7 @@ function Profile() {
             <Divider sx={{ my: 3 }} />
 
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
                   label="Prénom"
@@ -208,7 +208,7 @@ function Profile() {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
                   label="Nom"
@@ -224,7 +224,7 @@ function Profile() {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   label="Email"
@@ -285,7 +285,7 @@ function Profile() {
             {isChangingPassword ? (
               <>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <TextField
                       fullWidth
                       label="Mot de passe actuel"
@@ -308,7 +308,7 @@ function Profile() {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <TextField
                       fullWidth
                       label="Nouveau mot de passe"
@@ -319,7 +319,7 @@ function Profile() {
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <TextField
                       fullWidth
                       label="Confirmer le nouveau mot de passe"

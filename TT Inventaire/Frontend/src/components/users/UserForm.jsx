@@ -127,7 +127,7 @@ function UserForm({ open, onClose, onSubmit, user, loading }) {
           )}
 
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 label="Prénom"
                 name="prenom"
@@ -139,7 +139,7 @@ function UserForm({ open, onClose, onSubmit, user, loading }) {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 label="Nom"
                 name="nom"
@@ -150,7 +150,7 @@ function UserForm({ open, onClose, onSubmit, user, loading }) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 label="Email"
                 name="email"
@@ -162,7 +162,7 @@ function UserForm({ open, onClose, onSubmit, user, loading }) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 label={isEdit ? 'Nouveau mot de passe (laisser vide pour ne pas changer)' : 'Mot de passe'}
                 name="password"
@@ -186,7 +186,7 @@ function UserForm({ open, onClose, onSubmit, user, loading }) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <FormControl fullWidth required>
                 <InputLabel>Rôle</InputLabel>
                 <Select

@@ -38,9 +38,11 @@ import {
   LightMode as LightModeIcon,
   Notifications as NotificationsIcon,
   ManageAccounts as ManageAccountsIcon,
+  Accessibility as AccessibilityIcon,
 } from '@mui/icons-material';
 import { useAuth, useThemeMode } from '../../context';
 import BrandLogo from '../common/BrandLogo';
+import AccessibilityPanel from '../common/AccessibilityPanel';
 import { APP_NAME } from '../../utils/constants';
 
 const drawerWidth = 260;
@@ -61,6 +63,7 @@ const allMenuItems = [
 function Layout({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [a11yOpen, setA11yOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
@@ -94,6 +97,10 @@ function Layout({ children }) {
     handleUserMenuClose();
   };
 
+  const userDisplayName = user?.prenom
+    ? `${user.prenom} ${user.nom}`
+    : user?.email || 'Utilisateur';
+
   const drawer = (
     <Box
       sx={{
@@ -108,7 +115,7 @@ function Layout({ children }) {
         <BrandLogo height={48} centered showAppName />
       </Toolbar>
       <Divider sx={{ mx: 2 }} />
-      <List sx={{ px: 2, py: 2 }}>
+      <List sx={{ px: 2, py: 2 }} aria-label="Navigation principale">
         {menuItems.map((item) => {
           const isSelected = location.pathname === item.path;
           return (
@@ -116,6 +123,7 @@ function Layout({ children }) {
               <ListItemButton
                 selected={isSelected}
                 onClick={() => handleMenuClick(item.path)}
+                aria-current={isSelected ? 'page' : undefined}
                 sx={{
                   borderRadius: 2,
                   mb: 0.5,
@@ -123,12 +131,12 @@ function Layout({ children }) {
                   ...(isSelected && {
                     background: (theme) =>
                       theme.palette.mode === 'light'
-                        ? 'linear-gradient(135deg, #4A90E2 0%, #7B68EE 100%)'
+                        ? 'linear-gradient(135deg, #1B6CC8 0%, #5E4CC7 100%)'
                         : 'linear-gradient(135deg, #5B9FED 0%, #9B88FF 100%)',
                     color: '#fff',
-                    boxShadow: '0 4px 12px rgba(74, 144, 226, 0.25)',
+                    boxShadow: '0 4px 12px rgba(27, 108, 200, 0.35)',
                     '&:hover': {
-                      background: 'linear-gradient(135deg, #3A7BC8 0%, #6B5FD1 100%)',
+                      background: 'linear-gradient(135deg, #1457A0 0%, #4A3BAA 100%)',
                     },
                   }),
                   ...(!isSelected && {
@@ -136,8 +144,16 @@ function Layout({ children }) {
                       backgroundColor: (theme) =>
                         alpha(theme.palette.primary.main, 0.08),
                       transform: 'translateX(4px)',
+                      '@media (prefers-reduced-motion: reduce)': {
+                        transform: 'none',
+                      },
                     },
                   }),
+                  '&:focus-visible': {
+                    outline: '3px solid',
+                    outlineColor: 'primary.main',
+                    outlineOffset: '2px',
+                  },
                 }}
               >
                 <ListItemIcon
@@ -145,14 +161,17 @@ function Layout({ children }) {
                     color: isSelected ? '#fff' : 'inherit',
                     minWidth: 40,
                   }}
+                  aria-hidden="true"
                 >
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText
                   primary={item.text}
-                  primaryTypographyProps={{
-                    fontWeight: isSelected ? 600 : 500,
-                    fontSize: '0.95rem',
+                  slotProps={{
+                    primary: {
+                      fontWeight: isSelected ? 600 : 500,
+                      fontSize: '0.95rem',
+                    },
                   }}
                 />
               </ListItemButton>
@@ -165,7 +184,13 @@ function Layout({ children }) {
 
   return (
     <Box sx={{ display: 'flex' }}>
+      {/* Skip navigation link — visible only on keyboard focus */}
+      <a href="#main-content" className="skip-link">
+        Aller au contenu principal
+      </a>
+
       <AppBar
+        component="header"
         position="fixed"
         elevation={0}
         sx={{
@@ -184,7 +209,9 @@ function Layout({ children }) {
         <Toolbar>
           <IconButton
             color="inherit"
-            aria-label="open drawer"
+            aria-label="Ouvrir le menu de navigation"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-navigation-drawer"
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
@@ -223,10 +250,32 @@ function Layout({ children }) {
           </Typography>
 
           <Tooltip title="Notifications">
-            <IconButton color="inherit" sx={{ mr: 1 }}>
+            <IconButton
+              color="inherit"
+              aria-label="Notifications (aucune nouvelle notification)"
+              sx={{ mr: 1 }}
+            >
               <Badge badgeContent={0} color="error">
                 <NotificationsIcon />
               </Badge>
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Accessibilité">
+            <IconButton
+              color="inherit"
+              onClick={() => setA11yOpen(true)}
+              aria-label="Ouvrir le panneau d'accessibilité"
+              aria-haspopup="dialog"
+              sx={{
+                mr: 1,
+                background: (theme) => alpha(theme.palette.primary.main, 0.1),
+                '&:hover': {
+                  background: (theme) => alpha(theme.palette.primary.main, 0.2),
+                },
+              }}
+            >
+              <AccessibilityIcon />
             </IconButton>
           </Tooltip>
 
@@ -238,6 +287,11 @@ function Layout({ children }) {
             <IconButton
               color="inherit"
               onClick={toggleColorMode}
+              aria-label={
+                mode === 'dark'
+                  ? 'Activer le mode clair'
+                  : 'Activer le mode sombre'
+              }
               sx={{
                 mr: 2,
                 background: (theme) =>
@@ -255,6 +309,10 @@ function Layout({ children }) {
           <Tooltip title="Profil">
             <IconButton
               onClick={handleUserMenuOpen}
+              aria-label={`Menu utilisateur — ${userDisplayName}`}
+              aria-haspopup="true"
+              aria-expanded={Boolean(anchorEl)}
+              aria-controls="user-menu"
               sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -272,9 +330,10 @@ function Layout({ children }) {
                 sx={{
                   width: 36,
                   height: 36,
-                  background: 'linear-gradient(135deg, #4A90E2 0%, #7B68EE 100%)',
+                  background: 'linear-gradient(135deg, #1B6CC8 0%, #5E4CC7 100%)',
                   fontWeight: 700,
                 }}
+                aria-hidden="true"
               >
                 {user?.email?.charAt(0).toUpperCase()}
               </Avatar>
@@ -284,6 +343,7 @@ function Layout({ children }) {
                   display: { xs: 'none', md: 'block' },
                   fontWeight: 600,
                 }}
+                aria-hidden="true"
               >
                 {user?.email}
               </Typography>
@@ -291,6 +351,7 @@ function Layout({ children }) {
           </Tooltip>
 
           <Menu
+            id="user-menu"
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleUserMenuClose}
@@ -334,11 +395,14 @@ function Layout({ children }) {
           </Menu>
         </Toolbar>
       </AppBar>
+
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="Navigation latérale"
       >
         <Drawer
+          id="mobile-navigation-drawer"
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
@@ -373,18 +437,24 @@ function Layout({ children }) {
         </Drawer>
       </Box>
       <Box
+        id="main-content"
         component="main"
+        tabIndex={-1}
         sx={{
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           minHeight: '100vh',
           bgcolor: 'background.default',
+          '&:focus': { outline: 'none' },
         }}
       >
         <Toolbar />
         {children}
       </Box>
+
+      {/* Accessibility Panel */}
+      <AccessibilityPanel open={a11yOpen} onClose={() => setA11yOpen(false)} />
     </Box>
   );
 }

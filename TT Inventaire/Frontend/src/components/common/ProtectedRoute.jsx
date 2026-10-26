@@ -10,6 +10,9 @@ function ProtectedRoute({ children, adminOnly = false }) {
   if (loading) {
     return (
       <Box
+        role="status"
+        aria-label="Chargement de l'application"
+        aria-live="polite"
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -20,7 +23,21 @@ function ProtectedRoute({ children, adminOnly = false }) {
         }}
       >
         <BrandLogo height={80} centered />
-        <CircularProgress size={28} />
+        <CircularProgress size={28} aria-hidden="true" />
+        {/* Texte lu par les lecteurs d'écran, invisible visuellement */}
+        <Box
+          component="span"
+          sx={{
+            position: 'absolute',
+            width: 1,
+            height: 1,
+            overflow: 'hidden',
+            clip: 'rect(0 0 0 0)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          Chargement en cours…
+        </Box>
       </Box>
     );
   }

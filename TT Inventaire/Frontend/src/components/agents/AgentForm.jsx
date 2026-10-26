@@ -95,7 +95,7 @@ function AgentForm({ open, onClose, onSubmit, agent, loading }) {
       <form onSubmit={handleSubmit}>
         <DialogContent>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -106,7 +106,7 @@ function AgentForm({ open, onClose, onSubmit, agent, loading }) {
                 disabled={!!agent}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="Poste"
@@ -115,7 +115,7 @@ function AgentForm({ open, onClose, onSubmit, agent, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -125,7 +125,7 @@ function AgentForm({ open, onClose, onSubmit, agent, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -135,7 +135,7 @@ function AgentForm({ open, onClose, onSubmit, agent, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 type="email"
@@ -145,7 +145,7 @@ function AgentForm({ open, onClose, onSubmit, agent, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="Téléphone"
@@ -154,7 +154,7 @@ function AgentForm({ open, onClose, onSubmit, agent, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="Adresse IP"
@@ -165,7 +165,7 @@ function AgentForm({ open, onClose, onSubmit, agent, loading }) {
                 helperText="Adresse IP du poste de l'agent"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 select

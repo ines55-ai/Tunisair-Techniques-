@@ -224,7 +224,7 @@ function Scanner() {
               </Box>
 
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Paper sx={{ p: 2, bgcolor: 'primary.lighter' }}>
                     <Typography variant="caption" color="text.secondary">
                       Numéro de série
@@ -235,7 +235,7 @@ function Scanner() {
                   </Paper>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Typography variant="caption" color="text.secondary">
                     Désignation
                   </Typography>
@@ -244,7 +244,7 @@ function Scanner() {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <Typography variant="caption" color="text.secondary">
                     Marque
                   </Typography>
@@ -253,7 +253,7 @@ function Scanner() {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <Typography variant="caption" color="text.secondary">
                     Modèle
                   </Typography>
@@ -262,7 +262,7 @@ function Scanner() {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <Typography variant="caption" color="text.secondary">
                     Catégorie
                   </Typography>
@@ -271,7 +271,7 @@ function Scanner() {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <Typography variant="caption" color="text.secondary">
                     Statut
                   </Typography>
@@ -285,7 +285,7 @@ function Scanner() {
                 </Grid>
 
                 {materiel.agent && (
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <Typography variant="caption" color="text.secondary">
                       Affecté à
                     </Typography>
@@ -296,7 +296,7 @@ function Scanner() {
                 )}
 
                 {materiel.bureau && (
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <Typography variant="caption" color="text.secondary">
                       Bureau
                     </Typography>
@@ -307,7 +307,7 @@ function Scanner() {
                 )}
 
                 {materiel.numeroInventaire && (
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <Typography variant="caption" color="text.secondary">
                       Numéro d'inventaire
                     </Typography>

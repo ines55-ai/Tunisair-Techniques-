@@ -189,7 +189,7 @@ function Stock() {
         {/* Statistiques */}
         {statistics && (
           <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -204,7 +204,7 @@ function Stock() {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -221,7 +221,7 @@ function Stock() {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -238,7 +238,7 @@ function Stock() {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -265,10 +265,11 @@ function Stock() {
             placeholder="Rechercher par numéro de série, nom, catégorie ou emplacement..."
             value={search}
             onChange={handleSearchChange}
+            inputProps={{ 'aria-label': 'Rechercher dans le stock' }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon />
+                  <SearchIcon aria-hidden="true" />
                 </InputAdornment>
               ),
             }}
@@ -277,7 +278,7 @@ function Stock() {
 
         {/* Tableau */}
         <TableContainer component={Paper}>
-          <Table>
+          <Table aria-label="Liste du stock">{/* ... */}
             <TableHead>
               <TableRow>
                 <TableCell>N° Série</TableCell>
@@ -295,13 +296,13 @@ function Stock() {
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={9} align="center" sx={{ py: 4 }}>
-                    <CircularProgress />
+                    <CircularProgress aria-label="Chargement du stock" />
                   </TableCell>
                 </TableRow>
               ) : filteredStocks.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={9} align="center" sx={{ py: 4 }}>
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography variant="body1" color="text.secondary" role="status">
                       Aucun matériel en stock
                     </Typography>
                   </TableCell>
@@ -324,8 +325,12 @@ function Stock() {
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Typography>{stock.quantite}</Typography>
-                        {isAlerte(stock) && (
-                          <WarningIcon color="error" fontSize="small" />
+                      {isAlerte(stock) && (
+                          <WarningIcon
+                            color="error"
+                            fontSize="small"
+                            aria-label="Alerte : stock sous le seuil minimum"
+                          />
                         )}
                       </Box>
                     </TableCell>

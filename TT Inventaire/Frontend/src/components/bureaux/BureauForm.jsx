@@ -68,7 +68,7 @@ function BureauForm({ open, onClose, onSubmit, bureau, loading }) {
       <form onSubmit={handleSubmit}>
         <DialogContent>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 required
                 fullWidth
@@ -80,7 +80,7 @@ function BureauForm({ open, onClose, onSubmit, bureau, loading }) {
                 helperText="Ex: B101, B202"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 required
                 fullWidth
@@ -90,7 +90,7 @@ function BureauForm({ open, onClose, onSubmit, bureau, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="Étage"
@@ -99,7 +99,7 @@ function BureauForm({ open, onClose, onSubmit, bureau, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="Bâtiment"
@@ -108,7 +108,7 @@ function BureauForm({ open, onClose, onSubmit, bureau, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 type="number"

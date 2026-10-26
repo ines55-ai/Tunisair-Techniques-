@@ -245,7 +245,7 @@ function MouvementForm({ open, onClose, onSubmit, loading }) {
       case 1:
         return (
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Autocomplete
                 value={selectedMateriel}
                 onChange={handleMaterielChange}
@@ -274,7 +274,7 @@ function MouvementForm({ open, onClose, onSubmit, loading }) {
             </Grid>
 
             {(formData.typeMouvement === 'RETOUR' || formData.typeMouvement === 'TRANSFERT') && (
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Autocomplete
                   value={selectedAgentSource}
                   onChange={handleAgentSourceChange}
@@ -296,7 +296,7 @@ function MouvementForm({ open, onClose, onSubmit, loading }) {
             )}
 
             {(formData.typeMouvement === 'AFFECTATION' || formData.typeMouvement === 'TRANSFERT') && (
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Autocomplete
                   value={selectedAgentDest}
                   onChange={handleAgentDestChange}
@@ -317,7 +317,7 @@ function MouvementForm({ open, onClose, onSubmit, loading }) {
               </Grid>
             )}
 
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -331,7 +331,7 @@ function MouvementForm({ open, onClose, onSubmit, loading }) {
             </Grid>
 
             {formData.typeMouvement === 'MAINTENANCE' && (
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
                   type="date"
@@ -344,7 +344,7 @@ function MouvementForm({ open, onClose, onSubmit, loading }) {
               </Grid>
             )}
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 label="Motif"
@@ -358,7 +358,7 @@ function MouvementForm({ open, onClose, onSubmit, loading }) {
             </Grid>
 
             {formData.typeMouvement === 'REFORME' && (
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   label="Validé par"
@@ -371,7 +371,7 @@ function MouvementForm({ open, onClose, onSubmit, loading }) {
               </Grid>
             )}
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 label="Remarques"
@@ -393,41 +393,41 @@ function MouvementForm({ open, onClose, onSubmit, loading }) {
               Vérifiez les informations avant de confirmer le mouvement
             </Alert>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Typography variant="subtitle2" color="text.secondary">Type de mouvement</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', color: typeInfo?.color }}>
                   {typeInfo?.icon}
                   <Typography variant="h6" sx={{ ml: 1 }}>{typeInfo?.label}</Typography>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Typography variant="subtitle2" color="text.secondary">Matériel</Typography>
                 <Typography>{selectedMateriel?.numeroSerie} - {selectedMateriel?.nom}</Typography>
               </Grid>
               {selectedAgentSource && (
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Typography variant="subtitle2" color="text.secondary">Agent Source</Typography>
                   <Typography>{selectedAgentSource.matricule} - {selectedAgentSource.nom} {selectedAgentSource.prenom}</Typography>
                 </Grid>
               )}
               {selectedAgentDest && (
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Typography variant="subtitle2" color="text.secondary">Agent Destination</Typography>
                   <Typography>{selectedAgentDest.matricule} - {selectedAgentDest.nom} {selectedAgentDest.prenom}</Typography>
                 </Grid>
               )}
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Typography variant="subtitle2" color="text.secondary">Date de début</Typography>
                 <Typography>{new Date(formData.dateDebut).toLocaleDateString('fr-FR')}</Typography>
               </Grid>
               {formData.motif && (
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Typography variant="subtitle2" color="text.secondary">Motif</Typography>
                   <Typography>{formData.motif}</Typography>
                 </Grid>
               )}
               {formData.remarques && (
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Typography variant="subtitle2" color="text.secondary">Remarques</Typography>
                   <Typography>{formData.remarques}</Typography>
                 </Grid>

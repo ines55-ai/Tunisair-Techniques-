@@ -157,7 +157,7 @@ const InventaireDetails = () => {
       </Box>
 
       <Grid container spacing={3} sx={{ mb: 3 }}>
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>Informations générales</Typography>
@@ -201,7 +201,7 @@ const InventaireDetails = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>Statistiques</Typography>
@@ -331,7 +331,7 @@ const InventaireDetails = () => {
 
       {tabValue === 1 && ecarts && (
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Paper sx={{ p: 2 }}>
               <Typography variant="h6" gutterBottom color="error">
                 Matériels manquants ({ecarts.manquants.length})
@@ -359,7 +359,7 @@ const InventaireDetails = () => {
             </Paper>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Paper sx={{ p: 2 }}>
               <Typography variant="h6" gutterBottom color="warning.main">
                 Matériels en surplus ({ecarts.surplus.length})

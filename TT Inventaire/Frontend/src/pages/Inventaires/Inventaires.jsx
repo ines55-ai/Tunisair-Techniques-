@@ -213,7 +213,7 @@ const Inventaires = () => {
 
       {statistiques && (
         <Grid container spacing={3} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Card>
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
@@ -223,7 +223,7 @@ const Inventaires = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Card sx={{ bgcolor: 'primary.light', color: 'white' }}>
               <CardContent>
                 <Typography gutterBottom>
@@ -233,7 +233,7 @@ const Inventaires = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Card sx={{ bgcolor: 'info.light', color: 'white' }}>
               <CardContent>
                 <Typography gutterBottom>
@@ -243,7 +243,7 @@ const Inventaires = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Card sx={{ bgcolor: 'success.light', color: 'white' }}>
               <CardContent>
                 <Typography gutterBottom>
@@ -257,7 +257,7 @@ const Inventaires = () => {
       )}
 
       <TableContainer component={Paper}>
-        <Table>
+        <Table aria-label="Liste des inventaires">
           <TableHead>
             <TableRow>
               <TableCell>Référence</TableCell>
@@ -297,9 +297,9 @@ const Inventaires = () => {
                     size="small"
                     color="primary"
                     onClick={() => handleView(inventaire.id)}
-                    title="Voir détails"
+                    aria-label={`Voir les détails de l'inventaire ${inventaire.reference}`}
                   >
-                    <VisibilityIcon />
+                    <VisibilityIcon aria-hidden="true" />
                   </IconButton>
                   {inventaire.statut === 'EN_COURS' && (
                     <>
@@ -307,9 +307,9 @@ const Inventaires = () => {
                         size="small"
                         color="primary"
                         onClick={() => handleEdit(inventaire)}
-                        title="Modifier"
+                        aria-label={`Modifier l'inventaire ${inventaire.reference}`}
                       >
-                        <EditIcon />
+                        <EditIcon aria-hidden="true" />
                       </IconButton>
                       <IconButton
                         size="small"

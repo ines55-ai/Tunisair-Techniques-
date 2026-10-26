@@ -285,10 +285,11 @@ function Materiels() {
             placeholder="Rechercher par nom, numéro de série, marque..."
             value={search}
             onChange={handleSearchChange}
+            inputProps={{ 'aria-label': 'Rechercher un matériel' }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon />
+                  <SearchIcon aria-hidden="true" />
                 </InputAdornment>
               ),
             }}
@@ -296,7 +297,7 @@ function Materiels() {
         </Paper>
 
         <TableContainer component={Paper}>
-          <Table>
+          <Table aria-label="Liste des matériels">
             <TableHead>
               <TableRow>
                 <TableCell>N° Série</TableCell>
@@ -313,13 +314,13 @@ function Materiels() {
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
-                    <CircularProgress />
+                    <CircularProgress aria-label="Chargement des matériels" />
                   </TableCell>
                 </TableRow>
               ) : materiels.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography variant="body1" color="text.secondary" role="status">
                       Aucun matériel trouvé
                     </Typography>
                   </TableCell>
@@ -346,28 +347,29 @@ function Materiels() {
                     </TableCell>
                     <TableCell align="right">
                       <Tooltip title="Voir détails">
-                        <IconButton size="small" color="info" onClick={() => handleViewClick(materiel)}>
-                          <ViewIcon />
+                        <IconButton size="small" color="info" onClick={() => handleViewClick(materiel)} aria-label={`Voir les détails de ${materiel.nom}`}>
+                          <ViewIcon aria-hidden="true" />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Télécharger étiquette">
-                        <IconButton size="small" color="secondary" onClick={() => handleDownloadLabel(materiel)}>
-                          <QrCodeIcon />
+                        <IconButton size="small" color="secondary" onClick={() => handleDownloadLabel(materiel)} aria-label={`Télécharger l'étiquette de ${materiel.nom}`}>
+                          <QrCodeIcon aria-hidden="true" />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Modifier">
-                        <IconButton size="small" color="primary" onClick={() => handleEditClick(materiel)}>
-                          <EditIcon />
+                        <IconButton size="small" color="primary" onClick={() => handleEditClick(materiel)} aria-label={`Modifier ${materiel.nom}`}>
+                          <EditIcon aria-hidden="true" />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Affecter">
-                        <IconButton 
-                          size="small" 
-                          color="success" 
+                        <IconButton
+                          size="small"
+                          color="success"
                           onClick={() => handleAffectClick(materiel)}
                           disabled={materiel.agentId && materiel.statut !== 'EN_STOCK'}
+                          aria-label={`Affecter ${materiel.nom} à un agent`}
                         >
-                          <AffectIcon />
+                          <AffectIcon aria-hidden="true" />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Transférer">

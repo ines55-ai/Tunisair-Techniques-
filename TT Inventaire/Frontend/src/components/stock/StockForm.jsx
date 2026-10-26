@@ -128,7 +128,7 @@ function StockForm({ open, onClose, onSubmit, stock, loading }) {
       <form onSubmit={handleSubmit}>
         <DialogContent>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Autocomplete
                 value={selectedMateriel}
                 onChange={handleMaterielChange}
@@ -147,7 +147,7 @@ function StockForm({ open, onClose, onSubmit, stock, loading }) {
                 disabled={!!stock || loadingMateriels}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -159,7 +159,7 @@ function StockForm({ open, onClose, onSubmit, stock, loading }) {
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -176,7 +176,7 @@ function StockForm({ open, onClose, onSubmit, stock, loading }) {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -188,7 +188,7 @@ function StockForm({ open, onClose, onSubmit, stock, loading }) {
                 inputProps={{ min: '1' }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 type="number"
@@ -200,7 +200,7 @@ function StockForm({ open, onClose, onSubmit, stock, loading }) {
                 helperText="Alerte si quantité < seuil"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 label="Emplacement"
@@ -210,7 +210,7 @@ function StockForm({ open, onClose, onSubmit, stock, loading }) {
                 helperText="Ex: Magasin A, Étagère 3, Casier 12"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 multiline

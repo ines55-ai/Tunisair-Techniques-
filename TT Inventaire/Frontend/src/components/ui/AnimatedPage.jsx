@@ -1,49 +1,44 @@
 import { Box, Fade, Grow } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 /**
- * Wrapper pour animer l'apparition d'une page entière
- * 
- * @param {ReactNode} children - Contenu de la page
- * @param {string} animation - Type d'animation : 'fade' | 'grow' | 'slide'
- * @param {number} timeout - Durée de l'animation en ms
+ * Wrapper pour animer l'apparition d'une page entière.
+ * Respecte prefers-reduced-motion : si activé, le contenu
+ * apparaît immédiatement sans animation.
  */
-function AnimatedPage({ 
-  children, 
-  animation = 'fade', 
+function AnimatedPage({
+  children,
+  animation = 'fade',
   timeout = 600,
   delay = 0,
 }) {
-  const [show, setShow] = useState(false);
+  const prefersReduced =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const [show, setShow] = useState(prefersReduced); // immédiat si reduced-motion
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShow(true);
-    }, delay);
-
+    if (prefersReduced) return;
+    const timer = setTimeout(() => setShow(true), delay);
     return () => clearTimeout(timer);
-  }, [delay]);
+  }, [delay, prefersReduced]);
 
-  const renderAnimation = () => {
-    switch (animation) {
-      case 'grow':
-        return (
-          <Grow in={show} timeout={timeout}>
-            <Box>{children}</Box>
-          </Grow>
-        );
-      
-      case 'fade':
-      default:
-        return (
-          <Fade in={show} timeout={timeout}>
-            <Box>{children}</Box>
-          </Fade>
-        );
-    }
-  };
+  const effectiveTimeout = prefersReduced ? 0 : timeout;
 
-  return renderAnimation();
+  if (animation === 'grow') {
+    return (
+      <Grow in={show} timeout={effectiveTimeout}>
+        <Box>{children}</Box>
+      </Grow>
+    );
+  }
+
+  return (
+    <Fade in={show} timeout={effectiveTimeout}>
+      <Box>{children}</Box>
+    </Fade>
+  );
 }
 
 export default AnimatedPage;

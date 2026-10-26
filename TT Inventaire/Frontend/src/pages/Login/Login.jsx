@@ -137,7 +137,9 @@ function Login() {
             {error && (
               <Fade in>
                 <Alert 
-                  severity="error" 
+                  severity="error"
+                  role="alert"
+                  aria-live="assertive"
                   sx={{ 
                     width: '100%', 
                     mb: 3,
@@ -149,7 +151,13 @@ function Login() {
               </Fade>
             )}
 
-            <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              sx={{ width: '100%' }}
+              aria-label="Formulaire de connexion"
+              noValidate
+            >
               <TextField
                 margin="normal"
                 required
@@ -216,7 +224,9 @@ function Login() {
                 variant="contained"
                 size="large"
                 disabled={loading}
-                startIcon={!loading && <LoginIcon />}
+                aria-busy={loading}
+                aria-label={loading ? 'Connexion en cours…' : 'Se connecter'}
+                startIcon={!loading && <LoginIcon aria-hidden="true" />}
                 sx={{
                   py: 1.8,
                   fontSize: '1.05rem',
@@ -233,7 +243,12 @@ function Login() {
                 }}
               >
                 {loading ? (
-                  <CircularProgress size={26} color="inherit" />
+                  <>
+                    <CircularProgress size={26} color="inherit" aria-hidden="true" />
+                    <Box component="span" sx={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap' }}>
+                      Connexion en cours…
+                    </Box>
+                  </>
                 ) : (
                   'Se connecter'
                 )}

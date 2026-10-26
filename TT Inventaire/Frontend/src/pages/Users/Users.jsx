@@ -184,10 +184,11 @@ function Users() {
           onChange={(e) => setSearch(e.target.value)}
           fullWidth
           size="small"
+          inputProps={{ 'aria-label': 'Rechercher un utilisateur' }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon color="action" />
+                <SearchIcon color="action" aria-hidden="true" />
               </InputAdornment>
             ),
           }}
@@ -198,17 +199,17 @@ function Users() {
       <Paper elevation={1}>
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-            <CircularProgress />
+            <CircularProgress aria-label="Chargement des utilisateurs" />
           </Box>
         ) : filtered.length === 0 ? (
           <Box sx={{ textAlign: 'center', py: 8 }}>
-            <Typography color="text.secondary">
+            <Typography color="text.secondary" role="status">
               {search ? 'Aucun résultat trouvé' : 'Aucun utilisateur enregistré'}
             </Typography>
           </Box>
         ) : (
           <TableContainer>
-            <Table>
+            <Table aria-label="Liste des utilisateurs">
               <TableHead>
                 <TableRow sx={{ '& th': { fontWeight: 700, whiteSpace: 'nowrap' } }}>
                   <TableCell>Utilisateur</TableCell>
@@ -270,18 +271,19 @@ function Users() {
                               size="small"
                               color={u.actif ? 'success' : 'default'}
                               onClick={() => handleToggleActif(u)}
+                              aria-label={u.actif ? `Désactiver le compte de ${u.prenom} ${u.nom}` : `Activer le compte de ${u.prenom} ${u.nom}`}
                             >
-                              {u.actif ? <ToggleOnIcon /> : <ToggleOffIcon />}
+                              {u.actif ? <ToggleOnIcon aria-hidden="true" /> : <ToggleOffIcon aria-hidden="true" />}
                             </IconButton>
                           </Tooltip>
                           <Tooltip title="Modifier">
-                            <IconButton size="small" color="primary" onClick={() => handleOpenEdit(u)}>
-                              <EditIcon fontSize="small" />
+                            <IconButton size="small" color="primary" onClick={() => handleOpenEdit(u)} aria-label={`Modifier l'utilisateur ${u.prenom} ${u.nom}`}>
+                              <EditIcon fontSize="small" aria-hidden="true" />
                             </IconButton>
                           </Tooltip>
                           <Tooltip title="Supprimer">
-                            <IconButton size="small" color="error" onClick={() => handleOpenDelete(u)}>
-                              <DeleteIcon fontSize="small" />
+                            <IconButton size="small" color="error" onClick={() => handleOpenDelete(u)} aria-label={`Supprimer l'utilisateur ${u.prenom} ${u.nom}`}>
+                              <DeleteIcon fontSize="small" aria-hidden="true" />
                             </IconButton>
                           </Tooltip>
                         </Box>

@@ -23,6 +23,7 @@ import {
   Alert,
   Snackbar,
   Chip,
+  Tooltip,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -140,7 +141,7 @@ function Agents() {
           </Typography>
           <Button
             variant="contained"
-            startIcon={<AddIcon />}
+            startIcon={<AddIcon aria-hidden="true" />}
             onClick={handleAddClick}
           >
             Ajouter un Agent
@@ -153,10 +154,11 @@ function Agents() {
             placeholder="Rechercher par matricule, nom, prénom ou email..."
             value={search}
             onChange={handleSearchChange}
+            inputProps={{ 'aria-label': 'Rechercher un agent' }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon />
+                  <SearchIcon aria-hidden="true" />
                 </InputAdornment>
               ),
             }}
@@ -164,7 +166,7 @@ function Agents() {
         </Paper>
 
         <TableContainer component={Paper}>
-          <Table>
+          <Table aria-label="Liste des agents">
             <TableHead>
               <TableRow>
                 <TableCell>Matricule</TableCell>
@@ -183,13 +185,13 @@ function Agents() {
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={10} align="center" sx={{ py: 4 }}>
-                    <CircularProgress />
+                    <CircularProgress aria-label="Chargement des agents" />
                   </TableCell>
                 </TableRow>
               ) : filteredAgents.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={10} align="center" sx={{ py: 4 }}>
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography variant="body1" color="text.secondary" role="status">
                       Aucun agent trouvé
                     </Typography>
                   </TableCell>
@@ -232,15 +234,30 @@ function Agents() {
                         label={agent._count?.materiels || 0}
                         size="small"
                         color="info"
+                        aria-label={`${agent._count?.materiels || 0} matériel(s) affecté(s)`}
                       />
                     </TableCell>
                     <TableCell align="right">
-                      <IconButton size="small" color="primary" onClick={() => handleEditClick(agent)}>
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton size="small" color="error" onClick={() => handleDeleteClick(agent)}>
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title="Modifier">
+                        <IconButton
+                          size="small"
+                          color="primary"
+                          onClick={() => handleEditClick(agent)}
+                          aria-label={`Modifier l'agent ${agent.prenom} ${agent.nom}`}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Supprimer">
+                        <IconButton
+                          size="small"
+                          color="error"
+                          onClick={() => handleDeleteClick(agent)}
+                          aria-label={`Supprimer l'agent ${agent.prenom} ${agent.nom}`}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 ))

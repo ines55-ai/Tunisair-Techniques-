@@ -193,7 +193,7 @@ function Mouvements() {
         {/* Filtres */}
         <Paper sx={{ p: 2, mb: 2 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <TextField
                 fullWidth
                 select
@@ -210,7 +210,7 @@ function Mouvements() {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <TextField
                 fullWidth
                 select
@@ -227,9 +227,8 @@ function Mouvements() {
           </Grid>
         </Paper>
 
-        {/* Tableau */}
         <TableContainer component={Paper}>
-          <Table>
+          <Table aria-label="Liste des mouvements">
             <TableHead>
               <TableRow>
                 <TableCell>Date</TableCell>
@@ -246,13 +245,13 @@ function Mouvements() {
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
-                    <CircularProgress />
+                    <CircularProgress aria-label="Chargement des mouvements" />
                   </TableCell>
                 </TableRow>
               ) : mouvements.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography variant="body1" color="text.secondary" role="status">
                       Aucun mouvement trouvé
                     </Typography>
                   </TableCell>
@@ -329,9 +328,9 @@ function Mouvements() {
                         size="small"
                         color="error"
                         onClick={() => handleDownloadPDF(mouvement)}
-                        title="Télécharger PDF"
+                        aria-label={`Télécharger le PDF du mouvement du ${new Date(mouvement.date).toLocaleDateString('fr-FR')}`}
                       >
-                        <PdfIcon />
+                        <PdfIcon aria-hidden="true" />
                       </IconButton>
                       {!mouvement.cloture && (
                         <Button

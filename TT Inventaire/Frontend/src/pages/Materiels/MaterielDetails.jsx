@@ -264,7 +264,7 @@ function MaterielDetails() {
         {currentTab === 0 && (
           <Grid container spacing={3}>
             {/* Informations générales */}
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -334,7 +334,7 @@ function MaterielDetails() {
             </Grid>
 
             {/* Affectation actuelle */}
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>

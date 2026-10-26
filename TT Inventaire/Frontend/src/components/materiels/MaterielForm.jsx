@@ -132,7 +132,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
       <form onSubmit={handleSubmit}>
         <DialogContent>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -142,7 +142,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="Numéro d'Inventaire"
@@ -151,7 +151,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 required
                 fullWidth
@@ -161,7 +161,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="Marque"
@@ -170,7 +170,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="Modèle"
@@ -179,7 +179,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -197,7 +197,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 required
                 fullWidth
@@ -214,7 +214,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 type="date"
@@ -225,7 +225,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 type="date"
@@ -236,7 +236,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 type="number"
@@ -247,7 +247,7 @@ function MaterielForm({ open, onClose, onSubmit, materiel, loading }) {
                 inputProps={{ step: '0.01', min: '0' }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 multiline

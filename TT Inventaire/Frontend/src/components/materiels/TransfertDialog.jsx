@@ -137,7 +137,7 @@ function TransfertDialog({ open, onClose, onSubmit, materiel, loading }) {
               Affectation Actuelle
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid size={{ xs: 6 }}>
                 <Typography variant="body2" color="text.secondary">
                   Agent actuel
                 </Typography>
@@ -152,7 +152,7 @@ function TransfertDialog({ open, onClose, onSubmit, materiel, loading }) {
                   </Typography>
                 )}
               </Grid>
-              <Grid item xs={6}>
+              <Grid size={{ xs: 6 }}>
                 <Typography variant="body2" color="text.secondary">
                   Bureau actuel
                 </Typography>
@@ -176,7 +176,7 @@ function TransfertDialog({ open, onClose, onSubmit, materiel, loading }) {
           </Typography>
 
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 required
                 fullWidth
@@ -199,7 +199,7 @@ function TransfertDialog({ open, onClose, onSubmit, materiel, loading }) {
               </TextField>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 required
                 fullWidth
@@ -220,7 +220,7 @@ function TransfertDialog({ open, onClose, onSubmit, materiel, loading }) {
               </TextField>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 required
                 fullWidth
@@ -233,7 +233,7 @@ function TransfertDialog({ open, onClose, onSubmit, materiel, loading }) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 multiline

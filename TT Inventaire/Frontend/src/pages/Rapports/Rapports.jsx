@@ -107,7 +107,7 @@ const Rapports = () => {
           Générer un rapport mensuel
         </Typography>
         <Grid container spacing={2} sx={{ alignItems: 'center' }}>
-          <Grid item xs={12} sm={4}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <FormControl fullWidth>
               <InputLabel>Année</InputLabel>
               <Select
@@ -123,7 +123,7 @@ const Rapports = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <FormControl fullWidth>
               <InputLabel>Mois</InputLabel>
               <Select
@@ -139,7 +139,7 @@ const Rapports = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <Button
               fullWidth
               variant="contained"
@@ -191,7 +191,7 @@ const Rapports = () => {
           {/* Statistiques principales */}
           <Grid container spacing={3} sx={{ mb: 3 }}>
             {/* Matériels */}
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <Card>
                 <CardContent>
                   <Typography color="text.secondary" gutterBottom>
@@ -206,7 +206,7 @@ const Rapports = () => {
             </Grid>
 
             {/* Mouvements */}
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <Card>
                 <CardContent>
                   <Typography color="text.secondary" gutterBottom>
@@ -221,7 +221,7 @@ const Rapports = () => {
             </Grid>
 
             {/* Inventaires */}
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <Card>
                 <CardContent>
                   <Typography color="text.secondary" gutterBottom>
@@ -275,7 +275,7 @@ const Rapports = () => {
 
           {/* Agents et Bureaux */}
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Paper sx={{ p: 3 }}>
                 <Typography variant="h6" gutterBottom>
                   Agents
@@ -298,7 +298,7 @@ const Rapports = () => {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Paper sx={{ p: 3 }}>
                 <Typography variant="h6" gutterBottom>
                   Bureaux
